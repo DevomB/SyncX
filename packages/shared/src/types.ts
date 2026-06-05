@@ -54,6 +54,12 @@ export type BackgroundMessage =
   | { type: "SET_PAUSED"; paused: boolean }
   | { type: "FORCE_REPLAY_NOW" };
 
+export interface CloudBackendConfig {
+  apiUrl: string;
+  cognitoDomain: string;
+  cognitoClientId: string;
+}
+
 export interface ExtensionStatus {
   pendingCount: number;
   todayReplays: number;
@@ -61,6 +67,7 @@ export interface ExtensionStatus {
   paused: boolean;
   msLoggedIn: boolean;
   cloudConnected: boolean;
+  cloudConfigured: boolean;
 }
 
 export interface PostSearchBody {

@@ -12,6 +12,7 @@ Google search (capture) → SyncX queue (local or AWS) → Bing tab replay (your
 
 - **Extension:** Chrome MV3 — capture, schedule, replay
 - **API:** AWS Lambda + API Gateway HTTP + DynamoDB + Cognito
+- **AWS organization:** myApplications app + Resource Group **`syncx-prod`**
 - **Cost target:** ~$0–5/month for personal use ([details](#aws-deploy))
 
 ## Monorepo layout
@@ -38,34 +39,33 @@ pnpm --filter @syncx/extension build
 
 Full checklist: [docs/MANUAL_TEST_PHASE_A.md](docs/MANUAL_TEST_PHASE_A.md)
 
-## AWS deploy (Phase B — optional cloud queue)
+## AWS deploy (Phase B — your own cloud backend)
+
+SyncX is **self-hostable**: deploy to your AWS account, paste three values into the extension **Settings** UI. No API keys baked into the build.
 
 ```bash
 pnpm install
-pnpm --filter @syncx/infra deploy -- -c budgetEmail=you@example.com
+pnpm deploy:cloud
+# optional budget alerts: add -c budgetEmail=you@example.com after --
 ```
 
-Outputs written to `infra/outputs.json`. Configure extension:
+1. Open `infra/outputs.json` — copy `ApiUrl`, `CognitoDomain`, `UserPoolClientId` (or use `ExtensionConfigJson`).
+2. Extension **Settings → Your cloud backend** → paste values → **Save**.
+3. Add the OAuth callback URL (shown in Settings) to Cognito app client.
+4. Popup → **Sign in to SyncX**.
 
-```env
-# apps/extension/.env.local
-VITE_API_URL=<ApiUrl from outputs>
-VITE_COGNITO_CLIENT_ID=<UserPoolClientId>
-VITE_COGNITO_DOMAIN=<CognitoDomain>
-```
+Full guide: [docs/SELF_HOST.md](docs/SELF_HOST.md) · Test checklist: [docs/MANUAL_TEST_PHASE_B.md](docs/MANUAL_TEST_PHASE_B.md)
 
-Rebuild extension, add Cognito callback URL from `chrome.identity.getRedirectURL('syncx')`.
+### Optional dev shortcuts
 
-Full checklist: [docs/MANUAL_TEST_PHASE_B.md](docs/MANUAL_TEST_PHASE_B.md)
+Build-time `VITE_API_URL`, `VITE_COGNITO_CLIENT_ID`, `VITE_COGNITO_DOMAIN` in `apps/extension/.env.local` pre-fill defaults; **Settings UI overrides** for public/self-host distribution.
 
-## Environment variables
+## Configuration reference
 
-| Variable | Where | Description |
-|----------|-------|-------------|
-| `VITE_API_URL` | Extension build | API Gateway base URL |
-| `VITE_COGNITO_CLIENT_ID` | Extension build | Cognito app client ID |
-| `VITE_COGNITO_DOMAIN` | Extension build | Cognito hosted UI domain (no `https://`) |
-| `TABLE_NAME` | Lambda | Set by CDK (`SyncXTable`) |
+| Setting | Where | Description |
+|---------|-------|-------------|
+| API URL, Cognito domain, Client ID | Extension Settings | User-provided (BYOK) |
+| `TABLE_NAME` | Lambda env | Set by CDK (`SyncXTable`) |
 | `budgetEmail` | CDK context | Email for $10/mo budget alerts |
 
 ## Development

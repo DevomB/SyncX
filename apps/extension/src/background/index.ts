@@ -2,6 +2,7 @@ import type { BackgroundMessage, ExtensionStatus } from "@syncx/shared";
 import { STORAGE_KEYS } from "@syncx/shared";
 import { postSearch, isAuthenticated as isCloudAuthenticated, deleteUser, getStats as getCloudStats } from "../api/client";
 import { isCognitoConfigured, login, logout } from "../auth/cognitoPkce";
+import { isCloudConfigured } from "../config/cloudConfig";
 import { isMicrosoftLoggedIn } from "./bing/preflight";
 import {
   enqueue,
@@ -39,9 +40,10 @@ async function getStatus(): Promise<ExtensionStatus> {
   const settings = await getUserSettings();
   let pendingCount = await getPendingCount();
   let todayReplays = await getTodayReplayCount();
-  const [msLoggedIn, cloudConnected] = await Promise.all([
+  const [msLoggedIn, cloudConnected, cloudConfigured] = await Promise.all([
     isMicrosoftLoggedIn(),
     isCloudAuthenticated(),
+    isCloudConfigured(),
   ]);
 
   if (cloudConnected) {
@@ -62,6 +64,7 @@ async function getStatus(): Promise<ExtensionStatus> {
     paused: settings.paused,
     msLoggedIn,
     cloudConnected,
+    cloudConfigured,
   };
 }
 

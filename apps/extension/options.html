@@ -7,16 +7,30 @@
     <style>
       body {
         font-family: system-ui, sans-serif;
-        max-width: 480px;
+        max-width: 560px;
         margin: 24px auto;
-        padding: 0 16px;
+        padding: 0 16px 48px;
         background: #0f1419;
         color: #e7e9ea;
+      }
+      h1 {
+        font-size: 22px;
+      }
+      h2 {
+        font-size: 16px;
+        margin-top: 32px;
+        border-top: 1px solid #2f3336;
+        padding-top: 24px;
       }
       label {
         display: block;
         margin: 16px 0 4px;
         font-size: 14px;
+      }
+      .hint {
+        font-size: 12px;
+        color: #71767b;
+        margin: 4px 0 0;
       }
       input {
         width: 100%;
@@ -27,14 +41,25 @@
         color: #e7e9ea;
         box-sizing: border-box;
       }
+      code {
+        background: #16181c;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 12px;
+        word-break: break-all;
+      }
       button {
-        margin-top: 20px;
+        margin-top: 16px;
+        margin-right: 8px;
         padding: 10px 16px;
         border: none;
         border-radius: 6px;
         background: #1d9bf0;
         color: #fff;
         cursor: pointer;
+      }
+      button.secondary {
+        background: #2f3336;
       }
       .saved {
         color: #00ba7c;
@@ -43,12 +68,58 @@
       }
       .danger {
         background: #f4212e;
-        margin-left: 8px;
+      }
+      .callback-box {
+        margin-top: 12px;
+        padding: 10px;
+        background: #16181c;
+        border-radius: 6px;
+        font-size: 12px;
       }
     </style>
   </head>
   <body>
     <h1>SyncX Settings</h1>
+
+    <h2>Your cloud backend (self-hosted)</h2>
+    <p class="hint">
+      Deploy SyncX to your own AWS account, then paste the values from
+      <code>infra/outputs.json</code>. Leave blank to use local-only mode.
+    </p>
+
+    <form id="cloudForm">
+      <label for="apiUrl">API URL</label>
+      <input
+        id="apiUrl"
+        type="url"
+        placeholder="https://xxxx.execute-api.us-east-1.amazonaws.com"
+      />
+      <p class="hint">From CDK output <code>ApiUrl</code> — no trailing slash.</p>
+
+      <label for="cognitoDomain">Cognito domain</label>
+      <input
+        id="cognitoDomain"
+        type="text"
+        placeholder="syncx-xxxx.auth.us-east-1.amazoncognito.com"
+      />
+      <p class="hint">From CDK output <code>CognitoDomain</code> — host only, no https://.</p>
+
+      <label for="cognitoClientId">Cognito client ID</label>
+      <input id="cognitoClientId" type="text" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxx" />
+      <p class="hint">From CDK output <code>UserPoolClientId</code>.</p>
+
+      <div class="callback-box">
+        <strong>OAuth callback URL</strong> — add this in AWS Cognito → App client → Hosted UI:
+        <br /><code id="redirectUri">Loading…</code>
+      </div>
+
+      <button type="button" id="testHealth" class="secondary">Test API /health</button>
+      <button type="submit">Save cloud backend</button>
+      <button type="button" id="clearCloud" class="secondary">Clear cloud config</button>
+      <p id="cloudMsg" class="saved" style="display: none"></p>
+    </form>
+
+    <h2>Replay pacing</h2>
     <form id="settingsForm">
       <label for="minDelay">Min delay (seconds)</label>
       <input id="minDelay" type="number" min="30" max="600" required />
@@ -65,9 +136,9 @@
       <label for="activeEnd">Active end hour (0–23)</label>
       <input id="activeEnd" type="number" min="0" max="23" required />
 
-      <button type="submit">Save</button>
-      <button type="button" id="deleteAccount" class="danger">Delete cloud data</button>
-      <p id="savedMsg" class="saved" style="display: none">Saved.</p>
+      <button type="submit">Save pacing</button>
+      <button type="button" id="deleteAccount" class="danger">Delete cloud account data</button>
+      <p id="savedMsg" class="saved" style="display: none">Pacing saved.</p>
     </form>
     <script type="module" src="/options.ts"></script>
   </body>

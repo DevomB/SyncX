@@ -10,6 +10,10 @@ const manifest: ManifestV3Export = {
     "https://www.google.com/*",
     "https://www.bing.com/*",
   ],
+  optional_host_permissions: [
+    "https://*.execute-api.*.amazonaws.com/*",
+    "https://*.amazoncognito.com/*",
+  ],
   background: {
     service_worker: "src/background/index.ts",
     type: "module",

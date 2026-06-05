@@ -10,6 +10,7 @@
     "test": "node -e \"process.exit(0)\""
   },
   "dependencies": {
+    "@aws-cdk/aws-servicecatalogappregistry-alpha": "^2.173.2-alpha.0",
     "@syncx/api": "workspace:*",
     "aws-cdk-lib": "^2.173.2",
     "constructs": "^10.4.2"

@@ -1,62 +1,52 @@
 # Phase B Integration Test Checklist
 
-Complete after CDK deploy and Cognito configuration.
+Complete after CDK deploy and extension cloud backend configuration.
 
 ## Prerequisites
 
 - Phase A passed
-- AWS CDK deployed: `pnpm --filter @syncx/infra deploy -- -c budgetEmail=you@example.com`
+- AWS CDK deployed: `pnpm deploy:cloud` (see [SELF_HOST.md](./SELF_HOST.md))
 - `infra/outputs.json` contains `ApiUrl`, `UserPoolClientId`, `CognitoDomain`
-- Cognito app client callback URL updated (see below)
 
-## Configure extension environment
+## Configure extension (Settings UI — no rebuild required)
 
-Create `apps/extension/.env.local`:
-
-```env
-VITE_API_URL=https://xxxx.execute-api.us-east-1.amazonaws.com
-VITE_COGNITO_CLIENT_ID=your-client-id
-VITE_COGNITO_DOMAIN=syncx-xxxx.auth.us-east-1.amazoncognito.com
-```
-
-Rebuild extension: `pnpm --filter @syncx/extension build`
-
-## Cognito callback URL
-
-1. Load unpacked extension in Chrome.
-2. Open service worker console and run: `chrome.identity.getRedirectURL('syncx')`
-3. Copy the URL (format: `https://<extension-id>.chromiumapp.org/syncx`)
-4. AWS Console → Cognito → User Pool → App client → Hosted UI → add callback URL
-5. Save
+1. Reload unpacked extension from `apps/extension/dist`.
+2. Open **SyncX Settings** → **Your cloud backend**.
+3. Copy values from `infra/outputs.json` (or `ExtensionConfigJson` output):
+   - **API URL** → `ApiUrl`
+   - **Cognito domain** → `CognitoDomain`
+   - **Cognito client ID** → `UserPoolClientId`
+4. Copy the **OAuth callback URL** shown on the settings page.
+5. AWS Console → Cognito → App client → add callback URL → Save.
+6. Click **Test API /health** — should show OK.
+7. Click **Save cloud backend** — approve host permissions if prompted.
 
 ## Create test user
 
-AWS Console → Cognito → Users → Create user with email + temporary password, or self-sign-up via Hosted UI.
+Self-sign-up via popup **Sign in to SyncX**, or create a user in Cognito console.
 
 ## Steps
 
-1. Reload unpacked extension with `.env.local` values baked into build.
-2. Open SyncX popup → **Sign in to SyncX** → complete Cognito login.
-3. Confirm popup shows **Cloud: Connected**.
-4. Run three distinct Google searches:
+1. Open SyncX popup → **Sign in to SyncX** → complete Cognito login.
+2. Confirm popup shows **Cloud: Connected**.
+3. Run three distinct Google searches:
    - `syncx-cloud-test-1`
    - `syncx-cloud-test-2`
    - `syncx-cloud-test-3`
-5. AWS Console → DynamoDB → SyncXTable → Explore items — confirm **6+ items** for your user (`EVENT#*` and `QUEUE#*` rows).
-6. Wait for replays (or force via `FORCE_REPLAY_NOW`) — confirm three Bing replays complete.
-7. Call API (optional): `GET /v1/stats/today` with Bearer token — confirm `replayCount: 3`.
-8. Uninstall and reload extension, sign in again — pending queue should be empty; stats may reset locally but server stats persist.
+4. AWS Console → DynamoDB → SyncXTable → confirm `EVENT#*` and `QUEUE#*` rows for your user.
+5. Wait for replays (or `FORCE_REPLAY_NOW` in service worker console).
+6. Popup **Today** count should reach 3; **Pending** should drain.
+7. Optional: `GET {ApiUrl}/v1/stats/today` with Bearer token → `replayCount: 3`.
 
 ## Pass criteria
 
-- Cloud login succeeds
-- Search events stored in DynamoDB
-- Replays complete via cloud pending queue
-- Stats reflect completed replays
+- Cloud backend saved via Settings (not build-time env)
+- Cognito login succeeds
+- Search events in DynamoDB
+- Replays complete via cloud queue
 
 ## Fail actions
 
-- Verify JWT authorizer issuer matches User Pool
-- Verify `VITE_API_URL` has no trailing slash
+- Verify Cognito callback URL matches settings page exactly
+- Re-save cloud config if fetch/CORS errors
 - Check CloudWatch logs for `SyncXApiHandler`
-- Confirm callback URL matches extension redirect exactly

@@ -6,19 +6,21 @@ import type {
   UserSettings,
 } from "@syncx/shared";
 import { getAccessToken, logout } from "../auth/cognitoPkce";
+import { getCloudConfig, isCloudConfigured } from "../config/cloudConfig";
 
-const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(
-  /\/$/,
-  "",
-);
+async function getApiUrl(): Promise<string> {
+  const config = await getCloudConfig();
+  if (!config) {
+    throw new Error("Cloud backend not configured.");
+  }
+  return config.apiUrl;
+}
 
 async function authFetch(
   path: string,
   init: RequestInit = {},
 ): Promise<Response> {
-  if (!API_URL) {
-    throw new Error("VITE_API_URL not configured");
-  }
+  const apiUrl = await getApiUrl();
 
   let token = await getAccessToken();
   if (!token) {
@@ -31,7 +33,7 @@ async function authFetch(
     headers.set("Content-Type", "application/json");
   }
 
-  let response = await fetch(`${API_URL}${path}`, { ...init, headers });
+  let response = await fetch(`${apiUrl}${path}`, { ...init, headers });
 
   if (response.status === 401) {
     token = await getAccessToken();
@@ -40,7 +42,7 @@ async function authFetch(
       throw new Error("Session expired");
     }
     headers.set("Authorization", `Bearer ${token}`);
-    response = await fetch(`${API_URL}${path}`, { ...init, headers });
+    response = await fetch(`${apiUrl}${path}`, { ...init, headers });
     if (response.status === 401) {
       await logout();
       throw new Error("Session expired");
@@ -51,7 +53,7 @@ async function authFetch(
 }
 
 export function isApiConfigured(): boolean {
-  return Boolean(API_URL);
+  return false;
 }
 
 export async function postSearch(body: PostSearchBody): Promise<{
@@ -83,10 +85,13 @@ export async function completeQueueItem(
   id: string,
   body: CompleteQueueBody,
 ): Promise<void> {
-  const response = await authFetch(`/v1/queue/${encodeURIComponent(id)}/complete`, {
-    method: "POST",
-    body: JSON.stringify(body),
-  });
+  const response = await authFetch(
+    `/v1/queue/${encodeURIComponent(id)}/complete`,
+    {
+      method: "POST",
+      body: JSON.stringify(body),
+    },
+  );
   if (!response.ok) {
     throw new Error(`completeQueueItem failed: ${response.status}`);
   }
@@ -129,7 +134,7 @@ export async function deleteUser(): Promise<void> {
 }
 
 export async function isAuthenticated(): Promise<boolean> {
-  if (!isApiConfigured()) {
+  if (!(await isCloudConfigured())) {
     return false;
   }
   try {

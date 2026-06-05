@@ -21,13 +21,23 @@ async function refresh(): Promise<void> {
   stateEl.textContent = status.paused ? "Paused" : "Active";
   stateEl.className = status.paused ? "status-paused" : "";
   bingEl.textContent = status.msLoggedIn ? "Yes" : "No — sign in on Bing";
-  cloudEl.textContent = status.cloudConnected ? "Connected" : "Local only";
+
+  if (!status.cloudConfigured) {
+    cloudEl.textContent = "Not configured — open Settings";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "none";
+  } else if (status.cloudConnected) {
+    cloudEl.textContent = "Connected";
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "block";
+  } else {
+    cloudEl.textContent = "Configured — sign in";
+    loginBtn.style.display = "block";
+    logoutBtn.style.display = "none";
+  }
 
   currentPaused = status.paused;
   togglePauseBtn.textContent = status.paused ? "Resume" : "Pause";
-
-  loginBtn.style.display = status.cloudConnected ? "none" : "block";
-  logoutBtn.style.display = status.cloudConnected ? "block" : "none";
 }
 
 togglePauseBtn.addEventListener("click", async () => {

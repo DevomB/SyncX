@@ -36,6 +36,9 @@ importers:
 
   infra:
     dependencies:
+      '@aws-cdk/aws-servicecatalogappregistry-alpha':
+        specifier: ^2.173.2-alpha.0
+        version: 2.173.2-alpha.0(aws-cdk-lib@2.258.0(constructs@10.6.0))(constructs@10.6.0)
       '@syncx/api':
         specifier: workspace:*
         version: link:../services/api
@@ -100,6 +103,13 @@ packages:
 
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.2':
     resolution: {integrity: sha512-pDiuqH+qY3zM9lhhLjbKJ1tnKOHzQ2V4Wr/3qsxyKeKAkuPMI/BVGvZG1PbrikUw949cGVTfVEt4ETKKYnrj0Q==}
+
+  '@aws-cdk/aws-servicecatalogappregistry-alpha@2.173.2-alpha.0':
+    resolution: {integrity: sha512-MlWz8zbbo76AgmFJuFlsmVQrX5ncJQE6EskTHa3AvXjesqymCIrXGFPcEDuK7JuiAdQdj5K30NqjZw6eUaunXA==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.173.2
+      constructs: ^10.0.0
 
   '@aws-cdk/cloud-assembly-schema@54.2.0':
     resolution: {integrity: sha512-u3lFXmiXSBozxGBmKTCVD/2mTDsaXzLZH3KYiIQKcB+zPldXOeE5TnooBgKV9ih2jVTo8ML0HpkhfAq2eiv0eQ==}
@@ -1374,6 +1384,11 @@ snapshots:
   '@aws-cdk/asset-awscli-v1@2.2.282': {}
 
   '@aws-cdk/asset-node-proxy-agent-v6@2.1.2': {}
+
+  '@aws-cdk/aws-servicecatalogappregistry-alpha@2.173.2-alpha.0(aws-cdk-lib@2.258.0(constructs@10.6.0))(constructs@10.6.0)':
+    dependencies:
+      aws-cdk-lib: 2.258.0(constructs@10.6.0)
+      constructs: 10.6.0
 
   '@aws-cdk/cloud-assembly-schema@54.2.0': {}
 

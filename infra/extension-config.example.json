@@ -1,0 +1,5 @@
+{
+  "apiUrl": "https://YOUR_API_ID.execute-api.us-east-1.amazonaws.com",
+  "cognitoDomain": "syncx-xxxx.auth.us-east-1.amazoncognito.com",
+  "cognitoClientId": "YOUR_COGNITO_APP_CLIENT_ID"
+}

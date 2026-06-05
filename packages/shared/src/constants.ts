@@ -11,6 +11,7 @@ export const STORAGE_KEYS = {
   queue: "syncx:queue",
   stats: "syncx:stats",
   settings: "syncx:settings",
+  cloudConfig: "syncx:cloudConfig",
   msLoggedIn: "syncx:msLoggedIn",
   pausedUntil: "syncx:pausedUntil",
   lastReplayByQuery: "syncx:lastReplayByQuery",

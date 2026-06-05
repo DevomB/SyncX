@@ -1,8 +1,25 @@
 import {
   DEFAULT_USER_SETTINGS,
   STORAGE_KEYS,
+  type CloudBackendConfig,
   type UserSettings,
 } from "@syncx/shared";
+import {
+  clearCloudConfig,
+  getCloudConfig,
+  getOAuthRedirectUri,
+  saveCloudConfig,
+  testCloudHealth,
+} from "./src/config/cloudConfig";
+
+const cloudForm = document.getElementById("cloudForm") as HTMLFormElement;
+const apiUrlEl = document.getElementById("apiUrl") as HTMLInputElement;
+const cognitoDomainEl = document.getElementById("cognitoDomain") as HTMLInputElement;
+const cognitoClientIdEl = document.getElementById("cognitoClientId") as HTMLInputElement;
+const redirectUriEl = document.getElementById("redirectUri")!;
+const testHealthBtn = document.getElementById("testHealth") as HTMLButtonElement;
+const clearCloudBtn = document.getElementById("clearCloud") as HTMLButtonElement;
+const cloudMsg = document.getElementById("cloudMsg")!;
 
 const form = document.getElementById("settingsForm") as HTMLFormElement;
 const minDelayEl = document.getElementById("minDelay") as HTMLInputElement;
@@ -12,6 +29,71 @@ const activeStartEl = document.getElementById("activeStart") as HTMLInputElement
 const activeEndEl = document.getElementById("activeEnd") as HTMLInputElement;
 const savedMsg = document.getElementById("savedMsg")!;
 const deleteBtn = document.getElementById("deleteAccount") as HTMLButtonElement;
+
+function showCloudMsg(text: string, ok = true): void {
+  cloudMsg.textContent = text;
+  cloudMsg.style.color = ok ? "#00ba7c" : "#f4212e";
+  cloudMsg.style.display = "block";
+  setTimeout(() => {
+    cloudMsg.style.display = "none";
+  }, 4000);
+}
+
+async function loadCloudConfig(): Promise<void> {
+  redirectUriEl.textContent = getOAuthRedirectUri();
+  const config = await getCloudConfig();
+  if (!config) {
+    return;
+  }
+  apiUrlEl.value = config.apiUrl;
+  cognitoDomainEl.value = config.cognitoDomain;
+  cognitoClientIdEl.value = config.cognitoClientId;
+}
+
+cloudForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const config: CloudBackendConfig = {
+    apiUrl: apiUrlEl.value,
+    cognitoDomain: cognitoDomainEl.value,
+    cognitoClientId: cognitoClientIdEl.value,
+  };
+
+  try {
+    await saveCloudConfig(config);
+    showCloudMsg("Cloud backend saved. Sign in from the popup.");
+  } catch (error) {
+    showCloudMsg(
+      error instanceof Error ? error.message : "Failed to save cloud config",
+      false,
+    );
+  }
+});
+
+testHealthBtn.addEventListener("click", async () => {
+  const url = apiUrlEl.value.trim();
+  if (!url) {
+    showCloudMsg("Enter an API URL first.", false);
+    return;
+  }
+  try {
+    const ok = await testCloudHealth(url);
+    showCloudMsg(ok ? "API /health OK" : "API /health failed", ok);
+  } catch {
+    showCloudMsg("Could not reach API. Check URL and host permissions.", false);
+  }
+});
+
+clearCloudBtn.addEventListener("click", async () => {
+  if (!confirm("Clear cloud backend config? You will stay in local-only mode.")) {
+    return;
+  }
+  await clearCloudConfig();
+  apiUrlEl.value = "";
+  cognitoDomainEl.value = "";
+  cognitoClientIdEl.value = "";
+  await chrome.runtime.sendMessage({ type: "LOGOUT" });
+  showCloudMsg("Cloud config cleared.");
+});
 
 async function loadSettings(): Promise<void> {
   const result = await chrome.storage.local.get(STORAGE_KEYS.settings);
@@ -83,4 +165,5 @@ deleteBtn.addEventListener("click", async () => {
   }
 });
 
+void loadCloudConfig();
 void loadSettings();

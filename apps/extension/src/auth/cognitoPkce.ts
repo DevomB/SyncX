@@ -1,19 +1,26 @@
 import { SESSION_KEYS } from "@syncx/shared";
-
-const COGNITO_DOMAIN = import.meta.env.VITE_COGNITO_DOMAIN as string | undefined;
-const CLIENT_ID = import.meta.env.VITE_COGNITO_CLIENT_ID as string | undefined;
+import {
+  getCloudConfig,
+  getOAuthRedirectUri,
+  isCloudConfigured,
+} from "../config/cloudConfig";
 
 const TOKEN_REFRESH_BUFFER_MS = 5 * 60 * 1000;
 
-function getRedirectUri(): string {
-  return chrome.identity.getRedirectURL("syncx");
-}
-
-function requireConfig(): { domain: string; clientId: string } {
-  if (!COGNITO_DOMAIN || !CLIENT_ID) {
-    throw new Error("Cognito not configured. Set VITE_COGNITO_DOMAIN and VITE_COGNITO_CLIENT_ID.");
+async function requireConfig(): Promise<{
+  domain: string;
+  clientId: string;
+}> {
+  const config = await getCloudConfig();
+  if (!config) {
+    throw new Error(
+      "Cloud backend not configured. Open Settings and enter your API URL and Cognito credentials.",
+    );
   }
-  return { domain: COGNITO_DOMAIN, clientId: CLIENT_ID };
+  return {
+    domain: config.cognitoDomain,
+    clientId: config.cognitoClientId,
+  };
 }
 
 async function storeTokens(tokens: {
@@ -36,7 +43,7 @@ async function exchangeCodeForTokens(
   domain: string,
   clientId: string,
 ): Promise<void> {
-  const redirectUri = getRedirectUri();
+  const redirectUri = getOAuthRedirectUri();
   const body = new URLSearchParams({
     grant_type: "authorization_code",
     client_id: clientId,
@@ -63,8 +70,8 @@ async function exchangeCodeForTokens(
 }
 
 export async function login(): Promise<void> {
-  const { domain, clientId } = requireConfig();
-  const redirectUri = getRedirectUri();
+  const { domain, clientId } = await requireConfig();
+  const redirectUri = getOAuthRedirectUri();
 
   const authUrl = new URL(`https://${domain}/oauth2/authorize`);
   authUrl.searchParams.set("client_id", clientId);
@@ -84,7 +91,8 @@ export async function login(): Promise<void> {
   const url = new URL(responseUrl);
   const code = url.searchParams.get("code");
   if (!code) {
-    const error = url.searchParams.get("error_description") ?? "No authorization code";
+    const error =
+      url.searchParams.get("error_description") ?? "No authorization code";
     throw new Error(error);
   }
 
@@ -92,7 +100,7 @@ export async function login(): Promise<void> {
 }
 
 async function refreshAccessToken(): Promise<boolean> {
-  const { domain, clientId } = requireConfig();
+  const { domain, clientId } = await requireConfig();
   const session = await chrome.storage.session.get([
     SESSION_KEYS.refreshToken,
   ]);
@@ -127,6 +135,10 @@ async function refreshAccessToken(): Promise<boolean> {
 }
 
 export async function getAccessToken(): Promise<string | null> {
+  if (!(await isCloudConfigured())) {
+    return null;
+  }
+
   const session = await chrome.storage.session.get([
     SESSION_KEYS.accessToken,
     SESSION_KEYS.expiresAt,
@@ -154,7 +166,7 @@ export async function getAccessToken(): Promise<string | null> {
 }
 
 export async function isAuthenticated(): Promise<boolean> {
-  if (!COGNITO_DOMAIN || !CLIENT_ID) {
+  if (!(await isCloudConfigured())) {
     return false;
   }
   const token = await getAccessToken();
@@ -169,6 +181,4 @@ export async function logout(): Promise<void> {
   ]);
 }
 
-export function isCognitoConfigured(): boolean {
-  return Boolean(COGNITO_DOMAIN && CLIENT_ID);
-}
+export { isCloudConfigured as isCognitoConfigured };

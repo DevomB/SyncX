@@ -8,13 +8,24 @@ import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as lambdaNodejs from "aws-cdk-lib/aws-lambda-nodejs";
 import * as logs from "aws-cdk-lib/aws-logs";
 import * as budgets from "aws-cdk-lib/aws-budgets";
+import * as resourcegroups from "aws-cdk-lib/aws-resourcegroups";
+import {
+  Application,
+  AttributeGroup,
+} from "@aws-cdk/aws-servicecatalogappregistry-alpha";
 import { CfnOutput } from "aws-cdk-lib";
 import { Construct } from "constructs";
 import * as path from "path";
 
+const APPLICATION_NAME = "syncx-prod";
+
 export class SyncXStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
+
+    cdk.Tags.of(this).add("Application", APPLICATION_NAME);
+    cdk.Tags.of(this).add("Project", "SyncX");
+    cdk.Tags.of(this).add("Environment", "prod");
 
     const budgetEmail = this.node.tryGetContext("budgetEmail") as
       | string
@@ -81,13 +92,11 @@ export class SyncXStack extends cdk.Stack {
       environment: {
         TABLE_NAME: table.tableName,
       },
-      depsLockFilePath: path.join(__dirname, "../../pnpm-lock.yaml"),
       projectRoot: path.join(__dirname, "../.."),
       bundling: {
         minify: true,
         sourceMap: true,
-        externalModules: ["@aws-sdk/client-dynamodb", "@aws-sdk/lib-dynamodb"],
-        nodeModules: ["@syncx/shared"],
+        externalModules: [],
       },
       logRetention: logs.RetentionDays.ONE_WEEK,
     });
@@ -171,9 +180,19 @@ export class SyncXStack extends cdk.Stack {
       });
     }
 
+    new CfnOutput(this, "ExtensionConfigJson", {
+      value: JSON.stringify({
+        apiUrl: httpApi.apiEndpoint,
+        cognitoDomain: `${domainPrefix}.auth.${this.region}.amazoncognito.com`,
+        cognitoClientId: userPoolClient.userPoolClientId,
+      }),
+      description:
+        "Paste these three values into SyncX Settings → Your cloud backend",
+    });
+
     new CfnOutput(this, "ApiUrl", {
       value: httpApi.apiEndpoint,
-      description: "SyncX API base URL (set VITE_API_URL)",
+      description: "SyncX API base URL",
     });
 
     new CfnOutput(this, "UserPoolId", {
@@ -182,12 +201,12 @@ export class SyncXStack extends cdk.Stack {
 
     new CfnOutput(this, "UserPoolClientId", {
       value: userPoolClient.userPoolClientId,
-      description: "Set VITE_COGNITO_CLIENT_ID",
+      description: "Cognito app client ID for extension settings",
     });
 
     new CfnOutput(this, "CognitoDomain", {
       value: `${domainPrefix}.auth.${this.region}.amazoncognito.com`,
-      description: "Set VITE_COGNITO_DOMAIN",
+      description: "Cognito hosted UI domain (host only)",
     });
 
     new CfnOutput(this, "CognitoHostedUiUrl", {
@@ -197,6 +216,59 @@ export class SyncXStack extends cdk.Stack {
     new CfnOutput(this, "OAuthCallbackNote", {
       value:
         "After loading the extension, copy chrome.identity.getRedirectURL('syncx') and add it to Cognito app client callback URLs via AWS Console.",
+    });
+
+    const application = new Application(this, "SyncXAppRegistryApplication", {
+      applicationName: APPLICATION_NAME,
+      description:
+        "SyncX production cloud backend. API Gateway Lambda DynamoDB Cognito.",
+    });
+
+    application.associateApplicationWithStack(this);
+
+    const attributeGroup = new AttributeGroup(this, "SyncXAttributeGroup", {
+      attributeGroupName: "syncx-prod-attributes",
+      description: "SyncX production application metadata",
+      attributes: {
+        project: "SyncX",
+        environment: "prod",
+        component: "cloud-backend",
+      },
+    });
+
+    attributeGroup.associateWith(application);
+
+    new resourcegroups.CfnGroup(this, "SyncXResourceGroup", {
+      name: APPLICATION_NAME,
+      description:
+        "SyncX production resources for myApplications and Resource Groups",
+      resourceQuery: {
+        type: "TAG_FILTERS_1_0",
+        query: {
+          resourceTypeFilters: ["AWS::AllSupported"],
+          tagFilters: [
+            {
+              key: "Application",
+              values: [APPLICATION_NAME],
+            },
+          ],
+        },
+      },
+    });
+
+    new CfnOutput(this, "ApplicationName", {
+      value: APPLICATION_NAME,
+      description: "myApplications / AppRegistry application name",
+    });
+
+    new CfnOutput(this, "ApplicationArn", {
+      value: application.applicationArn,
+      description: "AppRegistry application ARN (awsApplication tag on resources)",
+    });
+
+    new CfnOutput(this, "ResourceGroupName", {
+      value: APPLICATION_NAME,
+      description: "AWS Resource Groups name for console filtering",
     });
   }
 }
