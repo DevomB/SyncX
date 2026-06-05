@@ -4,6 +4,11 @@ import {
   getOAuthRedirectUri,
   isCloudConfigured,
 } from "../config/cloudConfig";
+import {
+  createCodeChallenge,
+  createCodeVerifier,
+  createOAuthState,
+} from "./pkce";
 
 const TOKEN_REFRESH_BUFFER_MS = 5 * 60 * 1000;
 
@@ -42,6 +47,7 @@ async function exchangeCodeForTokens(
   code: string,
   domain: string,
   clientId: string,
+  codeVerifier: string,
 ): Promise<void> {
   const redirectUri = getOAuthRedirectUri();
   const body = new URLSearchParams({
@@ -49,6 +55,7 @@ async function exchangeCodeForTokens(
     client_id: clientId,
     code,
     redirect_uri: redirectUri,
+    code_verifier: codeVerifier,
   });
 
   const response = await fetch(`https://${domain}/oauth2/token`, {
@@ -72,12 +79,18 @@ async function exchangeCodeForTokens(
 export async function login(): Promise<void> {
   const { domain, clientId } = await requireConfig();
   const redirectUri = getOAuthRedirectUri();
+  const codeVerifier = createCodeVerifier();
+  const codeChallenge = await createCodeChallenge(codeVerifier);
+  const state = createOAuthState();
 
   const authUrl = new URL(`https://${domain}/oauth2/authorize`);
   authUrl.searchParams.set("client_id", clientId);
   authUrl.searchParams.set("response_type", "code");
   authUrl.searchParams.set("scope", "openid email profile");
   authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("code_challenge", codeChallenge);
+  authUrl.searchParams.set("code_challenge_method", "S256");
+  authUrl.searchParams.set("state", state);
 
   const responseUrl = await chrome.identity.launchWebAuthFlow({
     url: authUrl.toString(),
@@ -89,6 +102,11 @@ export async function login(): Promise<void> {
   }
 
   const url = new URL(responseUrl);
+  const returnedState = url.searchParams.get("state");
+  if (returnedState !== state) {
+    throw new Error("Login failed: invalid OAuth state");
+  }
+
   const code = url.searchParams.get("code");
   if (!code) {
     const error =
@@ -96,7 +114,7 @@ export async function login(): Promise<void> {
     throw new Error(error);
   }
 
-  await exchangeCodeForTokens(code, domain, clientId);
+  await exchangeCodeForTokens(code, domain, clientId, codeVerifier);
 }
 
 async function refreshAccessToken(): Promise<boolean> {

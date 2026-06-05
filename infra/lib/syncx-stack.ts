@@ -61,10 +61,6 @@ export class SyncXStack extends cdk.Stack {
     });
 
     const userPoolClient = userPool.addClient("SyncXExtensionClient", {
-      authFlows: {
-        userPassword: true,
-        userSrp: true,
-      },
       oAuth: {
         flows: { authorizationCodeGrant: true },
         scopes: [
@@ -105,17 +101,6 @@ export class SyncXStack extends cdk.Stack {
 
     const httpApi = new apigwv2.HttpApi(this, "SyncXHttpApi", {
       apiName: "syncx-api",
-      corsPreflight: {
-        allowHeaders: ["Authorization", "Content-Type"],
-        allowMethods: [
-          apigwv2.CorsHttpMethod.GET,
-          apigwv2.CorsHttpMethod.POST,
-          apigwv2.CorsHttpMethod.PATCH,
-          apigwv2.CorsHttpMethod.DELETE,
-          apigwv2.CorsHttpMethod.OPTIONS,
-        ],
-        allowOrigins: ["*"],
-      },
     });
 
     const jwtAuthorizer = new apigwAuthorizers.HttpJwtAuthorizer(

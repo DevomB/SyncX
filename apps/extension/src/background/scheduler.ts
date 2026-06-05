@@ -41,7 +41,8 @@ async function getNextItem(): Promise<{ item: QueueItem; useLocalQueue: boolean 
         return { item: remote, useLocalQueue: false };
       }
     } catch (error) {
-      console.warn("Cloud pending fetch failed", error);
+      const message = error instanceof Error ? error.message : "unknown error";
+      console.warn("Cloud pending fetch failed:", message);
     }
   }
   const local = await peekPending();

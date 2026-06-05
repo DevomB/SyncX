@@ -6,4 +6,8 @@ cdk.out/
 .env
 .env.*
 infra/outputs.json
+infra/extension-config.json
+*.pem
+*.key
+credentials*
 .DS_Store

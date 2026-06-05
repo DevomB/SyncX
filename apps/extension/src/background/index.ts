@@ -29,7 +29,8 @@ async function handleCapture(
       });
       return;
     } catch (error) {
-      console.warn("Cloud enqueue failed, falling back to local queue", error);
+      const message = error instanceof Error ? error.message : "unknown error";
+      console.warn("Cloud enqueue failed, falling back to local queue:", message);
     }
   }
 

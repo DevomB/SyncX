@@ -15,6 +15,23 @@ export function normalizeApiUrl(url: string): string {
   return url.trim().replace(/\/$/, "");
 }
 
+function parseHttpsApiUrl(url: string): URL {
+  let parsed: URL;
+  try {
+    parsed = new URL(normalizeApiUrl(url));
+  } catch {
+    throw new Error("API URL must be a valid https URL.");
+  }
+  if (parsed.protocol !== "https:") {
+    throw new Error("API URL must use https to protect your access tokens.");
+  }
+  return parsed;
+}
+
+export function assertHttpsApiUrl(url: string): void {
+  parseHttpsApiUrl(url);
+}
+
 function envFallback(): Partial<CloudBackendConfig> {
   return {
     apiUrl: trimOptional(import.meta.env.VITE_API_URL as string | undefined),
@@ -46,6 +63,12 @@ export async function getCloudConfig(): Promise<CloudBackendConfig | null> {
     return null;
   }
 
+  try {
+    parseHttpsApiUrl(apiUrl);
+  } catch {
+    return null;
+  }
+
   return { apiUrl, cognitoDomain, cognitoClientId };
 }
 
@@ -66,6 +89,8 @@ export async function saveCloudConfig(
     throw new Error("All cloud backend fields are required.");
   }
 
+  assertHttpsApiUrl(normalized.apiUrl);
+
   await requestCloudPermissions(normalized);
   await chrome.storage.local.set({
     [STORAGE_KEYS.cloudConfig]: normalized,
@@ -84,12 +109,7 @@ export async function requestCloudPermissions(
   config: CloudBackendConfig,
 ): Promise<void> {
   const origins = new Set<string>();
-
-  try {
-    origins.add(`${new URL(config.apiUrl).origin}/*`);
-  } catch {
-    throw new Error("API URL must be a valid https URL.");
-  }
+  origins.add(`${parseHttpsApiUrl(config.apiUrl).origin}/*`);
 
   origins.add(`https://${normalizeDomain(config.cognitoDomain)}/*`);
 
@@ -110,6 +130,7 @@ export function getOAuthRedirectUri(): string {
 }
 
 export async function testCloudHealth(apiUrl: string): Promise<boolean> {
+  parseHttpsApiUrl(apiUrl);
   const normalized = normalizeApiUrl(apiUrl);
   const response = await fetch(`${normalized}/health`);
   return response.ok;
