@@ -1,0 +1,23 @@
+{
+  "name": "@syncx/infra",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "cdk": "cdk",
+    "deploy": "cdk deploy --outputs-file outputs.json",
+    "synth": "cdk synth",
+    "test": "node -e \"process.exit(0)\""
+  },
+  "dependencies": {
+    "@syncx/api": "workspace:*",
+    "aws-cdk-lib": "^2.173.2",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "aws-cdk": "^2.173.2",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  }
+}

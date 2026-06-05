@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyncX</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 12px;
+        min-width: 240px;
+        background: #0f1419;
+        color: #e7e9ea;
+      }
+      h1 {
+        font-size: 16px;
+        margin: 0 0 12px;
+      }
+      .stat {
+        margin: 6px 0;
+        font-size: 13px;
+      }
+      .label {
+        color: #71767b;
+      }
+      button {
+        margin-top: 10px;
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 6px;
+        background: #1d9bf0;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      button.secondary {
+        background: #2f3336;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      a {
+        color: #1d9bf0;
+        font-size: 12px;
+        display: block;
+        margin-top: 10px;
+      }
+      .warning {
+        font-size: 11px;
+        color: #f4212e;
+        margin-top: 8px;
+      }
+      .status-paused {
+        color: #ffd400;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SyncX</h1>
+    <div class="stat"><span class="label">Pending:</span> <span id="pending">—</span></div>
+    <div class="stat"><span class="label">Today:</span> <span id="today">—</span></div>
+    <div class="stat"><span class="label">State:</span> <span id="state">—</span></div>
+    <div class="stat"><span class="label">Bing login:</span> <span id="bing">—</span></div>
+    <div class="stat"><span class="label">Cloud:</span> <span id="cloud">—</span></div>
+    <button id="togglePause">Pause</button>
+    <button id="loginBtn" class="secondary">Sign in to SyncX</button>
+    <button id="logoutBtn" class="secondary" style="display: none">Sign out</button>
+    <a href="options.html" target="_blank">Settings</a>
+    <p class="warning">Not affiliated with Microsoft. May violate Rewards rules.</p>
+    <script type="module" src="/popup.ts"></script>
+  </body>
+</html>

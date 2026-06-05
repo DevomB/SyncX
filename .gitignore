@@ -1,3 +1,9 @@
-*/node_modules/
-
-notes.*
+node_modules/
+dist/
+cdk.out/
+.turbo/
+*.tsbuildinfo
+.env
+.env.*
+infra/outputs.json
+.DS_Store

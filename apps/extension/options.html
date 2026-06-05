@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyncX Settings</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 480px;
+        margin: 24px auto;
+        padding: 0 16px;
+        background: #0f1419;
+        color: #e7e9ea;
+      }
+      label {
+        display: block;
+        margin: 16px 0 4px;
+        font-size: 14px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #2f3336;
+        border-radius: 6px;
+        background: #16181c;
+        color: #e7e9ea;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        background: #1d9bf0;
+        color: #fff;
+        cursor: pointer;
+      }
+      .saved {
+        color: #00ba7c;
+        margin-top: 8px;
+        font-size: 13px;
+      }
+      .danger {
+        background: #f4212e;
+        margin-left: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SyncX Settings</h1>
+    <form id="settingsForm">
+      <label for="minDelay">Min delay (seconds)</label>
+      <input id="minDelay" type="number" min="30" max="600" required />
+
+      <label for="maxDelay">Max delay (seconds)</label>
+      <input id="maxDelay" type="number" min="30" max="600" required />
+
+      <label for="maxReplays">Max replays per day</label>
+      <input id="maxReplays" type="number" min="1" max="30" required />
+
+      <label for="activeStart">Active start hour (0–23)</label>
+      <input id="activeStart" type="number" min="0" max="23" required />
+
+      <label for="activeEnd">Active end hour (0–23)</label>
+      <input id="activeEnd" type="number" min="0" max="23" required />
+
+      <button type="submit">Save</button>
+      <button type="button" id="deleteAccount" class="danger">Delete cloud data</button>
+      <p id="savedMsg" class="saved" style="display: none">Saved.</p>
+    </form>
+    <script type="module" src="/options.ts"></script>
+  </body>
+</html>

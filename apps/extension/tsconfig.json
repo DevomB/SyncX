@@ -1,0 +1,11 @@
+{
+  "extends": "../../packages/tsconfig/extension.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true,
+    "paths": {
+      "@syncx/shared": ["../../packages/shared/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "*.ts", "*.html"]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@syncx/api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/handler.js",
+  "scripts": {
+    "build": "tsup src/handler.ts --format cjs --dts --clean",
+    "lint": "tsc --noEmit",
+    "test": "node -e \"process.exit(0)\""
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.709.0",
+    "@aws-sdk/lib-dynamodb": "^3.709.0",
+    "@syncx/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.146",
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
