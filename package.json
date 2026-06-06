@@ -10,6 +10,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "dev:extension": "pnpm --filter @syncx/extension dev",
+    "dev:web": "pnpm --filter @syncx/web dev",
     "deploy:cloud": "pnpm build && pnpm --filter @syncx/infra deploy -- --outputs-file outputs.json"
   },
   "devDependencies": {

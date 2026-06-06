@@ -20,6 +20,7 @@ Google search (capture) → SyncX queue (local or AWS) → Bing tab replay (your
 | Path | Purpose |
 |------|---------|
 | `apps/extension` | Chrome extension |
+| `apps/web` | Marketing site (Next.js, Vercel-ready) |
 | `packages/shared` | Shared types and constants |
 | `services/api` | Lambda API handler |
 | `infra` | AWS CDK stack |
@@ -72,6 +73,7 @@ Build-time `VITE_API_URL`, `VITE_COGNITO_CLIENT_ID`, `VITE_COGNITO_DOMAIN` in `a
 
 ```bash
 pnpm dev:extension    # Vite dev server with HMR
+pnpm dev:web          # Next.js marketing site (localhost:3000)
 pnpm build            # Build all packages
 ```
 

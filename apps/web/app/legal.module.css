@@ -1,0 +1,9 @@
+.page {
+  padding: 48px 0 80px;
+}
+
+.updated {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-top: -0.5rem;
+}

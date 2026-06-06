@@ -1,0 +1,216 @@
+.hero {
+  padding: 72px 0 64px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(29, 155, 240, 0.18), transparent),
+    var(--bg);
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.heroCopy h1 {
+  margin: 16px 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.heroCopy p {
+  margin: 0 0 24px;
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 520px;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.heroDisclaimer {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.heroVisual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.flowCard {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.flowRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flowLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.flowQuery {
+  font-size: 15px;
+  color: var(--text);
+}
+
+.flowMeta {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.flowArrow {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 8px 0;
+  font-size: 18px;
+}
+
+.heroIcon {
+  position: absolute;
+  bottom: -16px;
+  right: -8px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.section {
+  padding: 64px 0;
+}
+
+.sectionAlt {
+  background: var(--bg-elevated);
+  border-block: 1px solid var(--border);
+}
+
+.sectionTitle {
+  margin: 0 0 12px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.sectionLead {
+  margin: 0 auto 40px;
+  max-width: 560px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.featureGrid h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+}
+
+.featureGrid p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.step {
+  text-align: center;
+}
+
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(29, 155, 240, 0.15);
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.step h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.step p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.diagram {
+  margin: 0 auto;
+  max-width: 720px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.ctaBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding: 40px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.ctaBlock h2 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.ctaBlock p {
+  margin: 0;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+
+  .heroVisual {
+    order: -1;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
