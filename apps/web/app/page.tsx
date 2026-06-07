@@ -1,40 +1,55 @@
+import type { ComponentType, SVGProps } from "react";
 import Link from "next/link";
 import { CHROME_STORE_URL, GITHUB_URL } from "@/lib/links";
+import {
+  BoltIcon,
+  SlidersIcon,
+  HomeIcon,
+  ShieldIcon,
+  PauseIcon,
+  CodeIcon,
+} from "@/components/icons";
 import styles from "./page.module.css";
 
-const features = [
+type Feature = {
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  title: string;
+  description: string;
+};
+
+const features: Feature[] = [
   {
-    icon: "⚡",
+    icon: BoltIcon,
     title: "Zero extra effort",
     description:
       "Search on Google the way you always have. SyncX quietly queues each query for later replay on Bing — no new habits needed.",
   },
   {
-    icon: "🎛",
+    icon: SlidersIcon,
     title: "You control the pace",
     description:
       "Set your own delays, daily limits, and active hours. Defaults are conservative by design.",
   },
   {
-    icon: "🏠",
+    icon: HomeIcon,
     title: "Local-first",
     description:
       "Works entirely out of Chrome's local storage. No account, no cloud, nothing phoning home.",
   },
   {
-    icon: "🔒",
+    icon: ShieldIcon,
     title: "Your data stays yours",
     description:
       "Stores query text only. Optionally deploy your own AWS backend — no shared server, no vendor lock-in.",
   },
   {
-    icon: "🛑",
+    icon: PauseIcon,
     title: "Auto-pause on detection",
     description:
       "Detects Bing throttle signals and pauses automatically. Resume any time from the popup.",
   },
   {
-    icon: "🔓",
+    icon: CodeIcon,
     title: "Fully open source",
     description:
       "MIT licensed. Read the code, fork it, self-host the backend, or just use the extension.",
@@ -130,13 +145,18 @@ export default function HomePage() {
             Lightweight, transparent, and built to stay out of your way.
           </p>
           <div className={styles.featureGrid}>
-            {features.map((feature) => (
-              <article key={feature.title} className={`card ${styles.featureCard}`}>
-                <span className={styles.featureIcon}>{feature.icon}</span>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-              </article>
-            ))}
+            {features.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <article key={feature.title} className={`card ${styles.featureCard}`}>
+                  <span className={styles.featureIcon} aria-hidden="true">
+                    <Icon />
+                  </span>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

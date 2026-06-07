@@ -132,10 +132,6 @@ Optional dev env: copy [`apps/extension/.env.example`](apps/extension/.env.examp
 
 Adjust in extension Settings.
 
-## Hack Club
-
-Built for [Hack Club Shipwrecked / The Bay](https://shipwrecked.hackclub.com/info/the-bay). Time tracked with [Hackatime](https://hackatime.hackclub.com).
-
 ## License
 
 [MIT](LICENSE) — Copyright (c) 2026 Devom B

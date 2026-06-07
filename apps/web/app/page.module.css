@@ -157,12 +157,25 @@
 .featureCard {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.featureCard:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+  transform: translateY(-2px);
 }
 
 .featureIcon {
-  font-size: 22px;
-  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: var(--accent);
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .featureGrid h3 {
@@ -272,5 +285,32 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 56px 0 48px;
+  }
+
+  .section {
+    padding: 56px 0;
+  }
+
+  .sectionLead {
+    margin-bottom: 36px;
+  }
+
+  .ctaBlock {
+    padding: 28px 24px;
+  }
+
+  .ctaButtons {
+    width: 100%;
+  }
+
+  .ctaButtons :global(.btn),
+  .heroActions :global(.btn) {
+    flex: 1;
   }
 }

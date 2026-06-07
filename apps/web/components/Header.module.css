@@ -3,7 +3,7 @@
   top: 0;
   z-index: 50;
   backdrop-filter: blur(12px);
-  background: rgba(15, 20, 25, 0.85);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
   border-bottom: 1px solid var(--border);
 }
 
@@ -23,6 +23,7 @@
   font-weight: 700;
   font-size: 18px;
   text-decoration: none;
+  margin-right: auto;
 }
 
 .brand:hover {
@@ -32,7 +33,7 @@
 .nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 28px;
 }
 
 .nav a {
@@ -40,6 +41,7 @@
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.12s ease;
 }
 
 .nav a:hover {
@@ -52,8 +54,68 @@
   padding: 8px 16px;
 }
 
+/* ── Mobile menu button ── */
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* ── Mobile dropdown panel ── */
+.mobilePanel {
+  display: none;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.mobilePanelOpen {
+  display: block;
+}
+
+.mobileNav {
+  width: min(var(--max-width), calc(100% - 48px));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0 20px;
+}
+
+.mobileNav a {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 500;
+  padding: 12px 4px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.mobileNav a:hover {
+  text-decoration: none;
+}
+
+.mobileCta {
+  margin-top: 8px;
+  width: 100%;
+  font-size: 15px;
+  padding: 12px 20px;
+}
+
 @media (max-width: 768px) {
-  .nav {
+  .nav,
+  .cta {
     display: none;
+  }
+
+  .menuButton {
+    display: inline-flex;
   }
 }

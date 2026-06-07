@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { CoconutAsset } from "@/components/CoconutAsset";
-import { CoconutGuard } from "@/components/CoconutGuard";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SITE_URL } from "@/lib/links";
 import "./globals.css";
 
 const inter = Inter({
@@ -13,27 +12,44 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "SyncX",
+    default: "SyncX — Mirror your Google searches to Bing",
     template: "%s · SyncX",
   },
   description:
     "Open-source Chrome extension that mirrors your Google searches to Bing — with configurable pacing, daily limits, and no cloud required.",
+  applicationName: "SyncX",
+  keywords: ["SyncX", "Chrome extension", "Bing", "search mirror", "open source"],
+  authors: [{ name: "Devom B" }],
   icons: {
     icon: "/icon-128.png",
+    apple: "/icon-128.png",
+  },
+  alternates: {
+    canonical: "/",
   },
   openGraph: {
     title: "SyncX — Mirror your searches to Bing",
     description:
       "Open-source Chrome extension. Local-first, self-hostable, MIT licensed.",
     type: "website",
-    url: "https://syncx.devomb.com",
+    url: SITE_URL,
+    siteName: "SyncX",
   },
   twitter: {
     card: "summary",
-    title: "SyncX",
-    description: "Open-source Chrome extension that mirrors your Google searches to Bing.",
+    title: "SyncX — Mirror your searches to Bing",
+    description:
+      "Open-source Chrome extension that mirrors your Google searches to Bing.",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0c0e12",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -44,12 +60,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable}>
       <body>
-        <CoconutAsset />
-        <CoconutGuard>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </CoconutGuard>
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
       </body>
     </html>
   );
