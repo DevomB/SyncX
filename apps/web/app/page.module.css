@@ -1,129 +1,145 @@
+/* ── Hero ── */
 .hero {
-  padding: 96px 0 80px;
+  padding: clamp(48px, 8vw, 88px) 0 clamp(56px, 10vw, 96px);
   background:
-    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(29, 155, 240, 0.14), transparent),
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(59, 130, 246, 0.14), transparent),
     var(--bg);
 }
 
 .heroInner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(40px, 6vw, 72px);
   align-items: center;
 }
 
+.heroCopy {
+  min-width: 0;
+}
+
 .heroCopy h1 {
-  margin: 16px 0 20px;
-  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
-  line-height: 1.1;
+  margin: 18px 0 16px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.08;
   letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 
 .heroCopy p {
-  margin: 0 0 32px;
-  font-size: 18px;
+  margin: 0 0 28px;
+  font-size: clamp(16px, 2.2vw, 18px);
   color: var(--text-muted);
-  max-width: 480px;
+  max-width: 34rem;
   line-height: 1.65;
 }
 
-.heroActions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-/* ── Flow card visual ── */
 .heroVisual {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-width: 0;
 }
 
+/* ── Flow card (vertical timeline) ── */
 .flowCard {
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
 }
 
-.flowRow {
+.flowStep {
+  position: relative;
+  padding-left: 28px;
+}
+
+.flowStep:not(:last-child) {
+  padding-bottom: 20px;
+}
+
+.flowStep:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 22px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.flowStepDot {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+}
+
+.flowStepDotPending {
+  border-color: var(--warning);
+}
+
+.flowStepDotDone {
+  border-color: var(--success);
+  background: rgba(16, 185, 129, 0.15);
+}
+
+.flowStepHead {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
 }
 
-.flowLabel {
-  font-size: 11px;
-  font-weight: 700;
+.flowStepLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
   color: var(--text-muted);
-  flex-shrink: 0;
-  min-width: 56px;
-}
-
-.flowQuery {
-  font-size: 14px;
-  color: var(--text);
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .flowChip {
   font-size: 11px;
   font-weight: 600;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 999px;
-  background: rgba(29, 155, 240, 0.15);
-  color: var(--accent);
   flex-shrink: 0;
 }
 
+.flowChipCaptured {
+  background: rgba(59, 130, 246, 0.15);
+  color: #93c5fd;
+}
+
 .flowChipPending {
-  background: rgba(255, 212, 0, 0.12);
-  color: var(--warning);
+  background: rgba(245, 158, 11, 0.14);
+  color: #fcd34d;
 }
 
 .flowChipDone {
-  background: rgba(0, 186, 124, 0.12);
-  color: var(--success);
+  background: rgba(16, 185, 129, 0.14);
+  color: #6ee7b7;
 }
 
-.flowConnector {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 75px;
-  gap: 2px;
-  margin: 4px 0;
-}
-
-.flowLine {
-  display: block;
-  width: 1px;
-  height: 8px;
-  background: var(--border);
-  margin-left: 4px;
-}
-
-.flowDot {
-  display: block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.5;
+.flowStepQuery {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.45;
+  word-break: break-word;
 }
 
 /* ── Sections ── */
 .section {
-  padding: 80px 0;
+  padding: clamp(56px, 10vw, 88px) 0;
 }
 
 .sectionAlt {
@@ -133,55 +149,52 @@
 
 .sectionTitle {
   margin: 0 0 12px;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-size: clamp(1.5rem, 4vw, 2rem);
   text-align: center;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .sectionLead {
-  margin: 0 auto 48px;
-  max-width: 520px;
+  margin: 0 auto 40px;
+  max-width: 34rem;
   text-align: center;
   color: var(--text-muted);
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: clamp(15px, 2.2vw, 17px);
+  line-height: 1.65;
 }
 
-/* ── Feature grid ── */
+/* ── Features ── */
 .featureGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
 .featureCard {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.featureCard:hover {
-  border-color: rgba(59, 130, 246, 0.35);
-  transform: translateY(-2px);
+  gap: 12px;
+  height: 100%;
 }
 
 .featureIcon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   color: var(--accent);
-  background: rgba(59, 130, 246, 0.12);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.18);
 }
 
 .featureGrid h3 {
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .featureGrid p {
@@ -191,17 +204,15 @@
   line-height: 1.6;
 }
 
-/* ── How it works ── */
+/* ── Steps ── */
 .steps {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-bottom: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 
 .step {
-  text-align: center;
-  padding: 32px 24px;
+  padding: 28px 24px;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -210,15 +221,15 @@
 .stepNum {
   display: inline-block;
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   color: var(--accent);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   font-variant-numeric: tabular-nums;
 }
 
 .step h3 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -231,50 +242,47 @@
   line-height: 1.6;
 }
 
-/* ── CTA block ── */
+/* ── CTA ── */
 .ctaBlock {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 32px;
   flex-wrap: wrap;
-  padding: 48px;
+  padding: clamp(28px, 5vw, 44px);
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  background-image: radial-gradient(ellipse 80% 120% at 100% 50%, rgba(29, 155, 240, 0.06), transparent);
+  border-radius: 16px;
 }
 
 .ctaBlock h2 {
   margin: 0 0 8px;
-  font-size: 1.6rem;
+  font-size: clamp(1.35rem, 3.5vw, 1.6rem);
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .ctaBlock p {
   margin: 0;
   color: var(--text-muted);
-  max-width: 440px;
+  max-width: 32rem;
   font-size: 15px;
   line-height: 1.6;
 }
 
-.ctaButtons {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
 /* ── Responsive ── */
-@media (max-width: 960px) {
+@media (max-width: 900px) {
   .heroInner {
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 40px;
   }
 
   .heroVisual {
-    order: -1;
+    order: 2;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
   }
 
   .steps {
@@ -283,34 +291,36 @@
 
   .ctaBlock {
     flex-direction: column;
-    align-items: flex-start;
-    padding: 32px;
+    align-items: stretch;
   }
 }
 
 @media (max-width: 640px) {
   .hero {
-    padding: 56px 0 48px;
+    padding-top: 32px;
+    padding-bottom: 48px;
+  }
+
+  .flowCard {
+    max-width: none;
+    padding: 18px 16px;
   }
 
   .section {
-    padding: 56px 0;
+    padding: 48px 0;
   }
 
   .sectionLead {
-    margin-bottom: 36px;
+    margin-bottom: 32px;
   }
 
-  .ctaBlock {
-    padding: 28px 24px;
+  .step {
+    padding: 22px 20px;
   }
+}
 
-  .ctaButtons {
-    width: 100%;
-  }
-
-  .ctaButtons :global(.btn),
-  .heroActions :global(.btn) {
-    flex: 1;
+@media (min-width: 901px) {
+  .heroVisual {
+    justify-content: flex-end;
   }
 }

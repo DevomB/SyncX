@@ -7,7 +7,7 @@
 [![AWS CDK](https://img.shields.io/badge/Cloud-AWS%20CDK-orange)](infra)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Not affiliated with Microsoft.** Using automation with Microsoft Rewards may violate the [Microsoft Services Agreement](https://www.microsoft.com/en-us/servicesagreement/) and result in account restrictions. See [docs/REWARDS_RISK.md](docs/REWARDS_RISK.md) and [docs/LEGAL_POSTURE.md](docs/LEGAL_POSTURE.md).
+**Not affiliated with Microsoft.** Using automation with Microsoft Rewards may violate the [Microsoft Services Agreement](https://www.microsoft.com/en-us/servicesagreement/) and result in account restrictions. Use at your own risk. See [Terms of Service](https://syncx.devomb.com/terms), [Privacy Policy](https://syncx.devomb.com/privacy), [docs/REWARDS_RISK.md](docs/REWARDS_RISK.md), and [docs/LEGAL_POSTURE.md](docs/LEGAL_POSTURE.md).
 
 ## Live links
 
@@ -17,6 +17,7 @@
 | **Marketing site** | [syncx.devomb.com](https://syncx.devomb.com) |
 | **Source code** | [github.com/DevomB/SyncX](https://github.com/DevomB/SyncX) |
 | **Privacy policy** | [syncx.devomb.com/privacy](https://syncx.devomb.com/privacy) |
+| **Terms of Service** | [syncx.devomb.com/terms](https://syncx.devomb.com/terms) |
 
 > Replace the Chrome Web Store and Vercel URLs in [`apps/web/lib/links.ts`](apps/web/lib/links.ts) once your listings are live.
 

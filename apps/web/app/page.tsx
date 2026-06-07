@@ -74,6 +74,30 @@ const steps = [
   },
 ];
 
+const flowSteps = [
+  {
+    label: "Google",
+    query: "“best coffee in portland”",
+    status: "Captured",
+    chipClass: styles.flowChipCaptured,
+    dotClass: styles.flowStepDot,
+  },
+  {
+    label: "SyncX queue",
+    query: "1 item pending",
+    status: "Paced",
+    chipClass: styles.flowChipPending,
+    dotClass: `${styles.flowStepDot} ${styles.flowStepDotPending}`,
+  },
+  {
+    label: "Bing",
+    query: "“best coffee in portland”",
+    status: "Done",
+    chipClass: styles.flowChipDone,
+    dotClass: `${styles.flowStepDot} ${styles.flowStepDotDone}`,
+  },
+];
+
 export default function HomePage() {
   return (
     <>
@@ -87,7 +111,7 @@ export default function HomePage() {
               and quietly replays it on Bing — with configurable pacing, daily limits,
               and no cloud required.
             </p>
-            <div className={styles.heroActions}>
+            <div className="btnStack">
               <a
                 href={CHROME_STORE_URL}
                 className="btn btn-primary"
@@ -106,33 +130,20 @@ export default function HomePage() {
               </a>
             </div>
           </div>
-          <div className={styles.heroVisual}>
+          <div className={styles.heroVisual} aria-hidden="true">
             <div className={styles.flowCard}>
-              <div className={styles.flowRow}>
-                <span className={styles.flowLabel}>Google</span>
-                <span className={styles.flowQuery}>&ldquo;best coffee in portland&rdquo;</span>
-                <span className={styles.flowChip}>captured</span>
-              </div>
-              <div className={styles.flowConnector}>
-                <span className={styles.flowLine} />
-                <span className={styles.flowDot} />
-                <span className={styles.flowLine} />
-              </div>
-              <div className={styles.flowRow}>
-                <span className={styles.flowLabel}>SyncX queue</span>
-                <span className={styles.flowQuery}>1 item pending</span>
-                <span className={`${styles.flowChip} ${styles.flowChipPending}`}>paced</span>
-              </div>
-              <div className={styles.flowConnector}>
-                <span className={styles.flowLine} />
-                <span className={styles.flowDot} />
-                <span className={styles.flowLine} />
-              </div>
-              <div className={styles.flowRow}>
-                <span className={styles.flowLabel}>Bing</span>
-                <span className={styles.flowQuery}>&ldquo;best coffee in portland&rdquo;</span>
-                <span className={`${styles.flowChip} ${styles.flowChipDone}`}>done</span>
-              </div>
+              {flowSteps.map((step) => (
+                <div key={step.label} className={styles.flowStep}>
+                  <span className={step.dotClass} />
+                  <div className={styles.flowStepHead}>
+                    <span className={styles.flowStepLabel}>{step.label}</span>
+                    <span className={`${styles.flowChip} ${step.chipClass}`}>
+                      {step.status}
+                    </span>
+                  </div>
+                  <p className={styles.flowStepQuery}>{step.query}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -186,7 +197,7 @@ export default function HomePage() {
               unpacked — your choice.
             </p>
           </div>
-          <div className={styles.ctaButtons}>
+          <div className="btnStack">
             <a
               href={CHROME_STORE_URL}
               className="btn btn-primary"

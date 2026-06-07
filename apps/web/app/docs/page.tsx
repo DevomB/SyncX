@@ -97,6 +97,8 @@ pnpm build`}</code>
         <a href={GITHUB_URL + "/issues"} target="_blank" rel="noopener noreferrer">
           Open an issue on GitHub
         </a>{" "}
+        · <Link href="/terms">Terms of Service</Link>
+        {" "}
         · <Link href="/privacy">Privacy policy</Link>
       </p>
     </article>

@@ -5,3 +5,6 @@ export const CHROME_STORE_URL =
   "https://chrome.google.com/webstore/detail/syncx";
 
 export const SITE_URL = "https://syncx.devomb.com";
+
+export const TERMS_URL = `${SITE_URL}/terms`;
+export const PRIVACY_URL = `${SITE_URL}/privacy`;

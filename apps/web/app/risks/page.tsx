@@ -14,8 +14,10 @@ export default function RisksPage() {
 
       <div className="callout">
         <p>
-          <strong>This is not legal advice.</strong> Review the terms of service for
-          any third-party platform you use before installing SyncX.
+          <strong>This is not legal advice.</strong> By using SyncX, you agree to our{" "}
+          <Link href="/terms">Terms of Service</Link> and{" "}
+          <Link href="/privacy">Privacy Policy</Link>, including all disclaimers,
+          limitation of liability, indemnification, and release provisions therein.
         </p>
       </div>
 
@@ -30,7 +32,7 @@ export default function RisksPage() {
       <h2>Third-party platforms</h2>
       <p>
         SyncX interacts with Google and Bing. Both platforms have terms of service
-        that govern automated access and use of their services. It is your
+        that govern automated access and use of their services. It is your sole
         responsibility to review those terms and determine whether your use of SyncX
         is consistent with them.
       </p>
@@ -43,12 +45,17 @@ export default function RisksPage() {
       <p>
         If you participate in any search-based rewards or incentive program, review
         that program&apos;s rules before using SyncX. SyncX does not make any
-        representations about compatibility with such programs.
+        representations about compatibility with such programs.{" "}
+        <strong>
+          You assume all risk of account restrictions, loss of points, or suspension.
+        </strong>
       </p>
 
       <h2>No warranty</h2>
       <p>
-        SyncX is provided as-is, without any warranty of any kind. See the{" "}
+        SyncX is provided <strong>as-is, without any warranty of any kind</strong>.
+        See the{" "}
+        <Link href="/terms">Terms of Service</Link> and{" "}
         <a
           href="https://github.com/DevomB/SyncX/blob/main/LICENSE"
           target="_blank"
@@ -56,10 +63,20 @@ export default function RisksPage() {
         >
           MIT License
         </a>{" "}
-        for the full disclaimer.
+        for full disclaimers.
       </p>
 
+      <h2>Limitation of liability</h2>
       <p>
+        To the fullest extent permitted by law, Devom B (the Operator) shall not be
+        liable for any damages arising from your use of SyncX, including but not
+        limited to loss of rewards points, account suspensions, data loss, or
+        third-party enforcement actions. See the{" "}
+        <Link href="/terms">Terms of Service</Link> for complete liability limitations,
+        indemnification, and dispute resolution terms.
+      </p>
+
+      <p style={{ marginTop: "2.5rem" }}>
         <Link href="/">← Back to home</Link>
       </p>
     </article>

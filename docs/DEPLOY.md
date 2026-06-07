@@ -15,6 +15,8 @@ Guide for publishing the marketing site and Chrome extension.
 
 **Privacy policy URL for Chrome Web Store:** `https://syncx.devomb.com/privacy`
 
+**Terms of Service URL:** `https://syncx.devomb.com/terms` (link from store description and extension UI)
+
 ### CLI (optional)
 
 ```bash
@@ -49,6 +51,7 @@ pnpm package:extension
    - Icon: 128×128 from `apps/extension/public/icon-128.png`
    - Screenshots: at least one 1280×800 (popup + options)
    - Privacy policy: `https://<your-vercel-domain>/privacy`
+   - Terms reference in description: `https://<your-vercel-domain>/terms`
 3. **Privacy practices**
    - Single purpose: mirrors Google queries to Bing with user-controlled pacing
    - Declare: storage, tabs, alarms, identity; host access to google.com and bing.com

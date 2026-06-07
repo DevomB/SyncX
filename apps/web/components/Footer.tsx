@@ -24,15 +24,20 @@ export function Footer() {
             <div className={styles.col}>
               <p className={styles.colTitle}>Info</p>
               <Link href="/docs">Setup guide</Link>
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/risks">Terms notice</Link>
+            </div>
+            <div className={styles.col}>
+              <p className={styles.colTitle}>Legal</p>
+              <Link href="/terms">Terms of Service</Link>
+              <Link href="/privacy">Privacy Policy</Link>
+              <Link href="/risks">Third-party notice</Link>
             </div>
           </div>
         </div>
         <div className={styles.bottom}>
           <p className={styles.copy}>© {new Date().getFullYear()} SyncX — MIT License</p>
           <p className={styles.disclaimer}>
-            Not affiliated with Microsoft or Google.
+            Not affiliated with Microsoft or Google. Use at your own risk. See Terms
+            of Service.
           </p>
         </div>
       </div>

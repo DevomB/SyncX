@@ -2,6 +2,8 @@
 
 **This document is informational only and is not legal advice.**
 
+By using SyncX, you agree to the [Terms of Service](./TERMS_OF_SERVICE.md), including disclaimers, limitation of liability, assumption of risk, release, and indemnification provisions. If you do not agree, do not use SyncX.
+
 SyncX replays search queries on Bing using automated browser navigation. That behavior may conflict with the Microsoft Rewards program rules you agreed to when creating a Microsoft account.
 
 ## What Microsoft defines as a qualifying Search
@@ -48,5 +50,7 @@ By using SyncX you accept that:
 - You may lose Microsoft Rewards points or account access
 - SyncX is **not affiliated with, endorsed by, or supported by Microsoft**
 - You should read Microsoft's current Services Agreement and Rewards policies before use
+- **You assume all risk** and **release the Operator from liability** for any consequences arising from your use (see [Terms of Service](./TERMS_OF_SERVICE.md))
+- **You agree to indemnify the Operator** against claims arising from your use
 
 If your account is restricted, Microsoft directs users to [Rewards Support](https://rewards.bing.com/support).

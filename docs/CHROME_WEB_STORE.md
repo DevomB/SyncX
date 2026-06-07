@@ -7,6 +7,7 @@ Complete these steps after `pnpm package:extension` produces `syncx-extension.zi
 - [ ] [Chrome Web Store developer account](https://chrome.google.com/webstore/devconsole) ($5 one-time)
 - [ ] `syncx-extension.zip` at repo root
 - [ ] Privacy policy live at **https://syncx.devomb.com/privacy**
+- [ ] Terms of Service live at **https://syncx.devomb.com/terms**
 
 ## Upload
 
@@ -22,12 +23,13 @@ Complete these steps after `pnpm package:extension` produces `syncx-extension.zi
 | Icon | `apps/extension/public/icon-128.png` |
 | Screenshots | Add to `docs/screenshots/` first (1280×800) |
 | Privacy policy | https://syncx.devomb.com/privacy |
+| Terms of Service | https://syncx.devomb.com/terms |
 
 **Description template:**
 
 > SyncX captures Google search queries and replays them on Bing in your browser with enforced pacing, daily caps, and active-hour windows. Local-first by default; optional self-hosted AWS backend.
 >
-> Not affiliated with Microsoft. May conflict with Microsoft Rewards program rules. Use at your own risk.
+> Not affiliated with Microsoft. May conflict with Microsoft Rewards program rules. Use at your own risk. By installing, you agree to the Terms of Service and Privacy Policy at syncx.devomb.com.
 
 ## Privacy practices
 
