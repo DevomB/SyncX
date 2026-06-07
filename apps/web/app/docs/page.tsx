@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { GITHUB_URL } from "@/lib/links";
+import { CHROME_STORE_URL, GITHUB_URL } from "@/lib/links";
 import styles from "../legal.module.css";
 
 export const metadata: Metadata = {
@@ -12,94 +11,38 @@ export default function DocsPage() {
     <article className={`container prose ${styles.page}`}>
       <h1>Setup guide</h1>
       <p>
-        SyncX has two modes: local-only (no account required) and cloud-backed
-        (self-hosted AWS). Start with local — you can add the cloud later.
+        SyncX runs entirely in Chrome — no account or cloud setup required.
       </p>
 
-      <h2 id="get-started">Install from Chrome Web Store</h2>
-      <p>
-        The easiest path. Install, sign in to Bing in the same Chrome profile,
-        then search on Google as normal. That&apos;s it.
-      </p>
-
-      <h2 id="build-source">Build from source</h2>
-      <p>Requires Node.js 20+ and pnpm.</p>
-      <pre>
-        <code>{`git clone https://github.com/DevomB/SyncX
-cd SyncX
-pnpm install
-pnpm build`}</code>
-      </pre>
+      <h2 id="install">Install</h2>
       <ol>
         <li>
-          Open <code>chrome://extensions</code> in Chrome → enable Developer mode
+          <a href={CHROME_STORE_URL} target="_blank" rel="noopener noreferrer">
+            Install from the Chrome Web Store
+          </a>
         </li>
         <li>
-          Click <strong>Load unpacked</strong> → select{" "}
-          <code>apps/extension/dist</code>
+          Sign in to{" "}
+          <a href="https://www.bing.com" target="_blank" rel="noopener noreferrer">
+            bing.com
+          </a>{" "}
+          in the same Chrome profile
         </li>
-        <li>
-          Sign in to <a href="https://www.bing.com" target="_blank" rel="noopener noreferrer">bing.com</a> in the same profile
-        </li>
-        <li>Search on Google — SyncX handles the rest</li>
+        <li>Search on Google — SyncX queues and replays on Bing automatically</li>
       </ol>
 
-      <h2 id="self-host">Self-host cloud backend (optional)</h2>
+      <h2 id="settings">Settings</h2>
       <p>
-        Deploying the backend syncs your queue and stats across devices. It runs on
-        your own AWS account — no shared server. Estimated cost: ~$0–5/month for
-        personal use.
+        Open the extension popup and click <strong>Settings</strong> to adjust
+        pacing, daily limits, active hours, or pause the queue.
       </p>
-
-      <h3>Requirements</h3>
-      <ul>
-        <li>AWS CLI configured with appropriate permissions</li>
-        <li>AWS CDK bootstrapped once per account/region</li>
-      </ul>
-
-      <h3>Deploy</h3>
-      <pre>
-        <code>{`pnpm deploy:cloud`}</code>
-      </pre>
-
-      <h3>Connect the extension</h3>
-      <ol>
-        <li>
-          Open <code>infra/outputs.json</code> and copy <code>ApiUrl</code>,{" "}
-          <code>CognitoDomain</code>, and <code>UserPoolClientId</code>
-        </li>
-        <li>
-          In the extension: open <strong>Settings</strong> → paste the three values
-          → <strong>Save</strong>
-        </li>
-        <li>
-          Add the OAuth callback URL (shown in Settings) to your Cognito app client
-        </li>
-        <li>
-          Click <strong>Sign in to SyncX</strong> in the popup
-        </li>
-      </ol>
-
-      <div className="callout">
-        <p>
-          Cloud settings are optional. The extension works fully without them — your
-          queue and settings stay in Chrome local storage.
-        </p>
-      </div>
-
-      <h2>Tear down</h2>
-      <pre>
-        <code>pnpm --filter @syncx/infra exec cdk destroy</code>
-      </pre>
 
       <p style={{ marginTop: "2.5rem" }}>
-        Questions?{" "}
-        <a href={GITHUB_URL + "/issues"} target="_blank" rel="noopener noreferrer">
-          Open an issue on GitHub
-        </a>{" "}
-        · <Link href="/terms">Terms of Service</Link>
-        {" "}
-        · <Link href="/privacy">Privacy policy</Link>
+        Building from source or self-hosting the optional cloud backend?{" "}
+        <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">
+          See the GitHub repo
+        </a>
+        .
       </p>
     </article>
   );

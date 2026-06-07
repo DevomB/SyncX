@@ -199,8 +199,8 @@ export default function HomePage() {
           <div>
             <h2>Get started in under a minute.</h2>
             <p>
-              Install from the Chrome Web Store or clone the repo and load it
-              unpacked — your choice.
+              Install from the Chrome Web Store, sign in to Bing, and search on
+              Google as usual.
             </p>
           </div>
           <div className="btnStack">
@@ -213,7 +213,7 @@ export default function HomePage() {
               Install extension
             </a>
             <Link href="/docs" className="btn btn-secondary">
-              Build from source
+              Setup guide
             </Link>
           </div>
         </div>
