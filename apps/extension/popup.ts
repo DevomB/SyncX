@@ -1,10 +1,5 @@
 import type { ExtensionStatus } from "@syncx/shared";
 
-const COCONUT_MISSING_ERROR = "COCONUT_MISSING";
-
-const mainEl = document.getElementById("main")!;
-const coconutErrorEl = document.getElementById("coconutError")!;
-
 const pendingEl = document.getElementById("pending")!;
 const todayEl = document.getElementById("today")!;
 const stateEl = document.getElementById("state")!;
@@ -16,27 +11,10 @@ const logoutBtn = document.getElementById("logoutBtn") as HTMLButtonElement;
 
 let currentPaused = false;
 
-function showCoconutError(): void {
-  mainEl.style.display = "none";
-  coconutErrorEl.style.display = "block";
-}
-
 async function refresh(): Promise<void> {
-  const response = await chrome.runtime.sendMessage({
+  const status = (await chrome.runtime.sendMessage({
     type: "GET_STATUS",
-  });
-
-  if (
-    response &&
-    typeof response === "object" &&
-    "error" in response &&
-    response.error === COCONUT_MISSING_ERROR
-  ) {
-    showCoconutError();
-    return;
-  }
-
-  const status = response as ExtensionStatus;
+  })) as ExtensionStatus;
 
   pendingEl.textContent = String(status.pendingCount);
   todayEl.textContent = `${status.todayReplays} / ${status.maxReplaysPerDay}`;

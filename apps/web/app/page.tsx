@@ -8,6 +8,7 @@ import {
   ShieldIcon,
   PauseIcon,
   CodeIcon,
+  GitHubIcon,
 } from "@/components/icons";
 import styles from "./page.module.css";
 
@@ -111,7 +112,7 @@ export default function HomePage() {
               and quietly replays it on Bing — with configurable pacing, daily limits,
               and no cloud required.
             </p>
-            <div className="btnStack">
+            <div className={styles.heroActions}>
               <a
                 href={CHROME_STORE_URL}
                 className="btn btn-primary"
@@ -122,28 +123,32 @@ export default function HomePage() {
               </a>
               <a
                 href={GITHUB_URL}
-                className="btn btn-secondary"
+                className={styles.sourceLink}
                 target="_blank"
                 rel="noopener noreferrer"
               >
+                <GitHubIcon />
                 View source
               </a>
             </div>
           </div>
           <div className={styles.heroVisual} aria-hidden="true">
-            <div className={styles.flowCard}>
-              {flowSteps.map((step) => (
-                <div key={step.label} className={styles.flowStep}>
-                  <span className={step.dotClass} />
-                  <div className={styles.flowStepHead}>
-                    <span className={styles.flowStepLabel}>{step.label}</span>
-                    <span className={`${styles.flowChip} ${step.chipClass}`}>
-                      {step.status}
-                    </span>
+            <div className={styles.flowStage}>
+              <span className={styles.flowPacket}>query</span>
+              <div className={styles.flowRoute}>
+                {flowSteps.map((step) => (
+                  <div key={step.label} className={styles.flowNode}>
+                    <span className={step.dotClass} />
+                    <div className={styles.flowStepHead}>
+                      <span className={styles.flowStepLabel}>{step.label}</span>
+                      <span className={`${styles.flowChip} ${step.chipClass}`}>
+                        {step.status}
+                      </span>
+                    </div>
+                    <p className={styles.flowStepQuery}>{step.query}</p>
                   </div>
-                  <p className={styles.flowStepQuery}>{step.query}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

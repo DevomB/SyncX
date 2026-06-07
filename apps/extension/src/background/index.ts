@@ -13,11 +13,6 @@ import {
   setThrottlePause,
   clearLocalData,
 } from "./queue/localQueue";
-import {
-  COCONUT_MISSING_ERROR,
-  initCoconutGuard,
-  isCoconutIntact,
-} from "../coconutGuard";
 import { initScheduler, forceReplayNow } from "./scheduler";
 
 async function handleCapture(
@@ -77,11 +72,6 @@ async function getStatus(): Promise<ExtensionStatus> {
 chrome.runtime.onMessage.addListener(
   (message: BackgroundMessage, _sender, sendResponse) => {
     void (async () => {
-      if (!isCoconutIntact()) {
-        sendResponse({ ok: false, error: COCONUT_MISSING_ERROR });
-        return;
-      }
-
       switch (message.type) {
         case "CAPTURE_SEARCH":
           await handleCapture(message.query, message.sourceUrl, message.capturedAt);
@@ -110,11 +100,6 @@ chrome.runtime.onMessage.addListener(
 );
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (!isCoconutIntact()) {
-    sendResponse({ ok: false, error: COCONUT_MISSING_ERROR });
-    return true;
-  }
-
   if (message.type === "LOGIN") {
     void login()
       .then(() => sendResponse({ ok: true }))
@@ -145,11 +130,6 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 });
 
 void (async () => {
-  const ok = await initCoconutGuard();
-  if (!ok) {
-    return;
-  }
-
   initScheduler();
 
   const result = await chrome.storage.local.get(STORAGE_KEYS.settings);

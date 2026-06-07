@@ -27,12 +27,6 @@ const manifest: ManifestV3Export = {
     "48": "icon-48.png",
     "128": "icon-128.png",
   },
-  web_accessible_resources: [
-    {
-      resources: ["coconut.png"],
-      matches: ["<all_urls>"],
-    },
-  ],
   options_page: "options.html",
   content_scripts: [
     {
