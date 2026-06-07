@@ -23,7 +23,10 @@ export const metadata: Metadata = {
   keywords: ["SyncX", "Chrome extension", "Bing", "search mirror", "open source"],
   authors: [{ name: "Devom B" }],
   icons: {
-    icon: "/icon-128.png",
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
     apple: "/icon-128.png",
   },
   alternates: {
@@ -59,8 +62,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <a href="#main" className="skip-link">
           Skip to content
         </a>

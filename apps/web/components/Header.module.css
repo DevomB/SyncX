@@ -2,6 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  padding-top: env(safe-area-inset-top);
   backdrop-filter: blur(12px);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--border);
@@ -21,6 +22,7 @@
   color: var(--text);
   font-weight: 700;
   font-size: 17px;
+  letter-spacing: -0.02em;
   text-decoration: none;
   margin-right: auto;
   min-height: 44px;
@@ -28,6 +30,12 @@
 
 .brand:hover {
   text-decoration: none;
+}
+
+.logo {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 6px;
 }
 
 .nav {
@@ -71,8 +79,26 @@
   flex-shrink: 0;
 }
 
+.mobileBackdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+.mobileBackdropOpen {
+  display: block;
+}
+
 .mobilePanel {
   display: none;
+  position: relative;
+  z-index: 45;
   border-bottom: 1px solid var(--border);
   background: var(--bg-elevated);
 }
@@ -118,5 +144,18 @@
 
   .menuButton {
     display: inline-flex;
+  }
+
+  .mobileBackdropOpen {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobileBackdrop,
+  .mobileBackdropOpen,
+  .mobilePanel,
+  .mobilePanelOpen {
+    display: none !important;
   }
 }

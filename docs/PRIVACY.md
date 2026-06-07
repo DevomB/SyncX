@@ -4,7 +4,7 @@ Last updated: 2026-06-06
 
 ## Operator
 
-This Privacy Policy is issued by **Devom B** ("Operator", "we", "us", "our"), operator of SyncX. Contact: **Devom.b@yahoo.com**.
+This Privacy Policy is issued by **Devom Brahmbhatt** ("Operator", "we", "us", "our"), operator of SyncX. Contact: **Devom.b@yahoo.com**.
 
 By installing, accessing, or using SyncX (the "Service"), you agree to this Privacy Policy and our [Terms of Service](./TERMS_OF_SERVICE.md). If you do not agree, do not use the Service.
 

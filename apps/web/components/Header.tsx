@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { CHROME_STORE_URL, GITHUB_URL } from "@/lib/links";
+import { CHROME_STORE_URL } from "@/lib/links";
 import { MenuIcon, CloseIcon } from "@/components/icons";
 import styles from "./Header.module.css";
 
@@ -11,11 +10,27 @@ const nav = [
   { href: "/#features", label: "Features" },
   { href: "/#how-it-works", label: "How it works" },
   { href: "/docs", label: "Docs" },
-  { href: GITHUB_URL, label: "GitHub", external: true },
-];
+] as const;
+
+function NavLink({
+  item,
+  className,
+  onNavigate,
+}: {
+  item: (typeof nav)[number];
+  className?: string;
+  onNavigate?: () => void;
+}) {
+  return (
+    <Link href={item.href} className={className} onClick={onNavigate}>
+      {item.label}
+    </Link>
+  );
+}
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -32,31 +47,21 @@ export function Header() {
     };
   }, [open]);
 
+  const navLinks = (linkClassName?: string, onNavigate?: () => void): ReactNode =>
+    nav.map((item) => (
+      <NavLink key={item.href} item={item} className={linkClassName} onNavigate={onNavigate} />
+    ));
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.inner}`}>
-        <Link href="/" className={styles.brand} onClick={() => setOpen(false)}>
-          <Image src="/icon-128.png" alt="" width={28} height={28} />
+        <Link href="/" className={styles.brand} onClick={close}>
+          <img src="/icon.svg" alt="" width={28} height={28} className={styles.logo} />
           <span>SyncX</span>
         </Link>
 
         <nav className={styles.nav} aria-label="Main">
-          {nav.map((item) =>
-            item.external ? (
-              <a
-                key={item.href}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <Link key={item.href} href={item.href}>
-                {item.label}
-              </Link>
-            )
-          )}
+          {navLinks()}
         </nav>
 
         <a
@@ -80,35 +85,27 @@ export function Header() {
         </button>
       </div>
 
+      <button
+        type="button"
+        className={`${styles.mobileBackdrop} ${open ? styles.mobileBackdropOpen : ""}`}
+        aria-label="Close menu"
+        hidden={!open}
+        onClick={close}
+      />
+
       <div
         id="mobile-nav"
         className={`${styles.mobilePanel} ${open ? styles.mobilePanelOpen : ""}`}
         hidden={!open}
       >
         <nav className={styles.mobileNav} aria-label="Mobile">
-          {nav.map((item) =>
-            item.external ? (
-              <a
-                key={item.href}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </a>
-            ) : (
-              <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
-                {item.label}
-              </Link>
-            )
-          )}
+          {navLinks(undefined, close)}
           <a
             href={CHROME_STORE_URL}
             className={`btn btn-primary ${styles.mobileCta}`}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
+            onClick={close}
           >
             Install extension
           </a>

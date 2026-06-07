@@ -8,7 +8,6 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const distDir = resolve(root, "apps", "extension", "dist");
 const outZip = resolve(root, "syncx-extension.zip");
 
-execSync("pnpm prebuild", { cwd: root, stdio: "inherit" });
 execSync("pnpm --filter @syncx/shared build", { cwd: root, stdio: "inherit" });
 execSync("pnpm --filter @syncx/extension build", { cwd: root, stdio: "inherit" });
 

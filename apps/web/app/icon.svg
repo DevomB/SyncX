@@ -1,0 +1,29 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="128" height="128" fill="#1E1E1E"/>
+<path d="M107 16L11 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M108 16L12 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M109 16L13 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M110 16L14 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M111 16L15 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M112 16L16 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M113 16L17 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M114 16L18 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M115 16L19 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M116 16L20 112" stroke="#0066FF" stroke-linecap="square"/>
+<path d="M117 16L21 112" stroke="#0066FF" stroke-linecap="square"/>
+<rect x="-0.25" y="0.25" width="11.5" height="0.5" transform="matrix(-1 0 0 1 117.5 15)" fill="white" stroke="#0066FF" stroke-width="0.5"/>
+<rect x="-0.25" y="0.25" width="11.5" height="0.5" transform="matrix(-1 0 0 1 21.5 112)" fill="white" stroke="#0066FF" stroke-width="0.5"/>
+<path d="M21 16L117 112" stroke="white" stroke-linecap="square"/>
+<path d="M20 16L116 112" stroke="white" stroke-linecap="square"/>
+<path d="M19 16L115 112" stroke="white" stroke-linecap="square"/>
+<path d="M18 16L114 112" stroke="white" stroke-linecap="square"/>
+<path d="M17 16L113 112" stroke="white" stroke-linecap="square"/>
+<path d="M16 16L112 112" stroke="white" stroke-linecap="square"/>
+<path d="M15 16L111 112" stroke="white" stroke-linecap="square"/>
+<path d="M14 16L110 112" stroke="white" stroke-linecap="square"/>
+<path d="M13 16L109 112" stroke="white" stroke-linecap="square"/>
+<path d="M12 16L108 112" stroke="white" stroke-linecap="square"/>
+<path d="M11 16L107 112" stroke="white" stroke-linecap="square"/>
+<rect x="10" y="15" width="12" height="1" fill="white"/>
+<rect x="106" y="112" width="12" height="1" fill="white"/>
+</svg>

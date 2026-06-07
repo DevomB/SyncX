@@ -473,6 +473,56 @@
   }
 }
 
+@media (max-width: 768px) {
+  .flowStage {
+    --flow-rail: 25px;
+    max-width: none;
+    padding: 18px 16px;
+    overflow: visible;
+  }
+
+  .flowTrack {
+    display: none;
+  }
+
+  .flowRoute {
+    position: relative;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-left: 36px;
+  }
+
+  .flowRoute::before {
+    content: "";
+    position: absolute;
+    left: var(--flow-rail);
+    top: 31px;
+    bottom: 31px;
+    width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      180deg,
+      rgba(59, 130, 246, 0.15),
+      rgba(59, 130, 246, 0.55) 22%,
+      rgba(245, 158, 11, 0.55) 50%,
+      rgba(16, 185, 129, 0.55) 78%,
+      rgba(16, 185, 129, 0.15)
+    );
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  .flowNode {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  .flowStepDot {
+    left: calc(-36px + var(--flow-rail) - 7px);
+    top: 22px;
+  }
+}
+
 @media (max-width: 640px) {
   .hero {
     padding-top: 32px;
@@ -497,61 +547,6 @@
     font-size: 13px;
   }
 
-  .flowStage {
-    max-width: none;
-    padding: 18px 16px;
-  }
-
-  .flowTrack {
-    position: static;
-    height: 0;
-    margin: 0;
-  }
-
-  .flowTrack::before {
-    display: none;
-  }
-
-  .flowStage::before {
-    content: "";
-    position: absolute;
-    left: 30px;
-    top: 18px;
-    bottom: 18px;
-    width: 2px;
-    height: auto;
-    background: linear-gradient(
-      180deg,
-      rgba(59, 130, 246, 0),
-      rgba(59, 130, 246, 0.65),
-      rgba(16, 185, 129, 0.65),
-      rgba(16, 185, 129, 0)
-    );
-    opacity: 0.75;
-  }
-
-  .flowPacket {
-    left: 17px;
-    top: 34px;
-    transform: none;
-    animation-name: packetTravelMobile;
-  }
-
-  .flowRoute {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .flowNode {
-    min-height: 116px;
-    padding: 20px 16px 18px 52px;
-  }
-
-  .flowStepDot {
-    left: 18px;
-    top: 25px;
-  }
-
   .section {
     padding: 48px 0;
   }
@@ -562,29 +557,5 @@
 
   .step {
     padding: 22px 20px;
-  }
-}
-@keyframes packetTravelMobile {
-  0%,
-  12% {
-    top: 34px;
-    opacity: 1;
-  }
-
-  36%,
-  48% {
-    top: calc(33% - 17px);
-    opacity: 1;
-  }
-
-  72%,
-  84% {
-    top: calc(66% - 17px);
-    opacity: 1;
-  }
-
-  100% {
-    top: calc(66% - 17px);
-    opacity: 0.35;
   }
 }
