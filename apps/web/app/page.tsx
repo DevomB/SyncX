@@ -140,7 +140,6 @@ export default function HomePage() {
               <div className={styles.flowRoute}>
                 {flowSteps.map((step) => (
                   <div key={step.label} className={styles.flowNode}>
-                    <span className={step.dotClass} />
                     <div className={styles.flowStepHead}>
                       <span className={styles.flowStepLabel}>{step.label}</span>
                       <span className={`${styles.flowChip} ${step.chipClass}`}>
