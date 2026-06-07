@@ -3,7 +3,7 @@ import type { ManifestV3Export } from "@crxjs/vite-plugin";
 const manifest: ManifestV3Export = {
   manifest_version: 3,
   name: "SyncX",
-  version: "0.1.0",
+  version: "1.0.0",
   description: "Search mirror queue — replays Google queries on Bing with enforced pacing.",
   permissions: ["storage", "alarms", "notifications", "identity", "tabs"],
   host_permissions: [
@@ -23,8 +23,16 @@ const manifest: ManifestV3Export = {
     default_title: "SyncX",
   },
   icons: {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
     "128": "icon-128.png",
   },
+  web_accessible_resources: [
+    {
+      resources: ["coconut.png"],
+      matches: ["<all_urls>"],
+    },
+  ],
   options_page: "options.html",
   content_scripts: [
     {

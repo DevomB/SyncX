@@ -2,61 +2,91 @@
   margin-top: 80px;
   border-top: 1px solid var(--border);
   background: var(--bg-elevated);
-  padding: 48px 0 32px;
+  padding: 56px 0 36px;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
 }
 
 .top {
   display: flex;
   justify-content: space-between;
-  gap: 32px;
+  gap: 48px;
   flex-wrap: wrap;
 }
 
 .brand {
+  flex-shrink: 0;
+}
+
+.brandName {
   margin: 0 0 4px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 17px;
   color: var(--text);
 }
 
 .tagline {
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--text-muted);
 }
 
-.links {
+.cols {
   display: flex;
+  gap: 48px;
   flex-wrap: wrap;
-  gap: 20px;
 }
 
-.links a {
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 120px;
+}
+
+.colTitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.col a {
   font-size: 14px;
   color: var(--text-muted);
   text-decoration: none;
+  transition: color 0.12s;
 }
 
-.links a:hover {
-  color: var(--accent);
+.col a:hover {
+  color: var(--text);
   text-decoration: none;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.copy {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted);
 }
 
 .disclaimer {
   margin: 0;
   font-size: 13px;
-  color: var(--error);
-  max-width: 640px;
-}
-
-.copy {
-  margin: 0;
-  font-size: 12px;
   color: var(--text-muted);
 }

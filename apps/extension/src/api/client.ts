@@ -52,10 +52,6 @@ async function authFetch(
   return response;
 }
 
-export function isApiConfigured(): boolean {
-  return false;
-}
-
 export async function postSearch(body: PostSearchBody): Promise<{
   eventId: string;
   queueId: string;

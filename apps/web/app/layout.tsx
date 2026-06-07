@@ -1,23 +1,38 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { CoconutAsset } from "@/components/CoconutAsset";
+import { CoconutGuard } from "@/components/CoconutGuard";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
 export const metadata: Metadata = {
   title: {
-    default: "SyncX — Search mirror queue for Chrome",
+    default: "SyncX",
     template: "%s · SyncX",
   },
   description:
-    "SyncX captures Google search queries and replays them on Bing in your browser with enforced pacing and daily caps.",
+    "Open-source Chrome extension that mirrors your Google searches to Bing — with configurable pacing, daily limits, and no cloud required.",
   icons: {
     icon: "/icon-128.png",
   },
   openGraph: {
-    title: "SyncX — Search mirror queue for Chrome",
+    title: "SyncX — Mirror your searches to Bing",
     description:
-      "Personal search mirroring with local-first mode and optional self-hosted AWS backend.",
+      "Open-source Chrome extension. Local-first, self-hostable, MIT licensed.",
     type: "website",
+    url: "https://syncx.devomb.com",
+  },
+  twitter: {
+    card: "summary",
+    title: "SyncX",
+    description: "Open-source Chrome extension that mirrors your Google searches to Bing.",
   },
 };
 
@@ -27,11 +42,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
-        <Header />
-        <main>{children}</main>
-        <Footer />
+        <CoconutAsset />
+        <CoconutGuard>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </CoconutGuard>
       </body>
     </html>
   );

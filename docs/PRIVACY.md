@@ -42,7 +42,7 @@ We do not sell data. AWS hosts cloud infrastructure under their privacy and secu
 
 ## Export
 
-Contact: **privacy@your-domain.example** (replace before public launch) to request a copy of cloud-stored data.
+Contact: **Devom.b@yahoo.com** to request a copy of cloud-stored data.
 
 ## Deletion
 

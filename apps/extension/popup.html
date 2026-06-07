@@ -55,9 +55,20 @@
       .status-paused {
         color: #ffd400;
       }
+      #coconutError {
+        display: none;
+        font-size: 13px;
+        line-height: 1.4;
+        color: #f4212e;
+      }
     </style>
   </head>
   <body>
+    <div id="coconutError">
+      <h1>SyncX</h1>
+      <p>The coconut is gone. Everything is broken now. Fuck you.</p>
+    </div>
+    <div id="main">
     <h1>SyncX</h1>
     <div class="stat"><span class="label">Pending:</span> <span id="pending">—</span></div>
     <div class="stat"><span class="label">Today:</span> <span id="today">—</span></div>
@@ -69,6 +80,7 @@
     <button id="logoutBtn" class="secondary" style="display: none">Sign out</button>
     <a href="options.html" target="_blank">Settings</a>
     <p class="warning">Not affiliated with Microsoft. May violate Rewards rules.</p>
+    </div>
     <script type="module" src="/popup.ts"></script>
   </body>
 </html>

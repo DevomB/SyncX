@@ -11,3 +11,6 @@ infra/extension-config.json
 *.key
 credentials*
 .DS_Store
+syncx-extension.zip
+
+.vercel

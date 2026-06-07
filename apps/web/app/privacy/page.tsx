@@ -87,8 +87,8 @@ export default function PrivacyPage() {
 
       <h2>Export</h2>
       <p>
-        Contact <strong>privacy@your-domain.example</strong> (replace before public
-        launch) to request a copy of cloud-stored data.
+        Contact <strong>Devom.b@yahoo.com</strong> to request a copy of cloud-stored
+        data.
       </p>
 
       <h2>Deletion</h2>

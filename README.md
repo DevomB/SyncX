@@ -1,19 +1,87 @@
 # SyncX
 
-Search mirror queue for Chrome — captures Google search queries and replays them on Bing in your browser with enforced pacing and daily caps.
+**Search mirror queue for Chrome** — captures Google search queries and replays them on Bing in your browser with enforced pacing and daily caps.
 
-**Not affiliated with Microsoft.** Using automation with Microsoft Rewards may violate the [Microsoft Services Agreement](https://www.microsoft.com/en-us/servicesagreement/) and result in account restrictions. See [docs/REWARDS_RISK.md](docs/REWARDS_RISK.md) and [docs/LEGAL_POSTURE.md](docs/LEGAL_POSTURE.md). Consult an attorney before commercial distribution.
+[![Chrome Extension](https://img.shields.io/badge/Chrome-MV3-blue)](apps/extension)
+[![Next.js](https://img.shields.io/badge/Web-Next.js-black)](apps/web)
+[![AWS CDK](https://img.shields.io/badge/Cloud-AWS%20CDK-orange)](infra)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Architecture
+**Not affiliated with Microsoft.** Using automation with Microsoft Rewards may violate the [Microsoft Services Agreement](https://www.microsoft.com/en-us/servicesagreement/) and result in account restrictions. See [docs/REWARDS_RISK.md](docs/REWARDS_RISK.md) and [docs/LEGAL_POSTURE.md](docs/LEGAL_POSTURE.md).
+
+## Live links
+
+| Resource | URL |
+|----------|-----|
+| **Install extension** | [Chrome Web Store (unlisted)](https://chrome.google.com/webstore/detail/syncx) — update after approval |
+| **Marketing site** | [syncx.devomb.com](https://syncx.devomb.com) |
+| **Source code** | [github.com/DevomB/SyncX](https://github.com/DevomB/SyncX) |
+| **Privacy policy** | [syncx.devomb.com/privacy](https://syncx.devomb.com/privacy) |
+
+> Replace the Chrome Web Store and Vercel URLs in [`apps/web/lib/links.ts`](apps/web/lib/links.ts) once your listings are live.
+
+## What it does
+
+SyncX watches for Google searches you already run, queues the query text, and later opens Bing in your browser to run the same search — with random delays, daily caps, and active-hour windows you control.
 
 ```
 Google search (capture) → SyncX queue (local or AWS) → Bing tab replay (your browser)
 ```
 
-- **Extension:** Chrome MV3 — capture, schedule, replay
-- **API:** AWS Lambda + API Gateway HTTP + DynamoDB + Cognito
-- **AWS organization:** myApplications app + Resource Group **`syncx-prod`**
-- **Cost target:** ~$0–5/month for personal use ([details](#aws-deploy))
+- **Phase A (local):** Queue lives in Chrome storage — no account required.
+- **Phase B (cloud):** Self-host AWS (Lambda, DynamoDB, Cognito) and paste three values into extension Settings.
+
+## Screenshots
+
+Add captures to [`docs/screenshots/`](docs/screenshots/) after building:
+
+- Extension popup (pending count, pause/resume)
+- Options page (pacing settings)
+- Bing replay in action
+
+## Install (end users)
+
+1. Install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/syncx) (unlisted link).
+2. Sign in to [bing.com](https://www.bing.com) in the same Chrome profile.
+3. Search on Google — SyncX queues and replays on Bing automatically.
+
+## Build from source
+
+**Requirements:** Node.js 20+, pnpm 9+
+
+```bash
+pnpm install
+pnpm build
+```
+
+Load unpacked: Chrome → `chrome://extensions` → Developer mode → **Load unpacked** → `apps/extension/dist`
+
+Full checklist: [docs/MANUAL_TEST_PHASE_A.md](docs/MANUAL_TEST_PHASE_A.md)
+
+### Package for Chrome Web Store
+
+```bash
+pnpm package:extension
+# Creates syncx-extension.zip at repo root
+```
+
+See [docs/DEPLOY.md](docs/DEPLOY.md) for Vercel + Chrome Web Store publishing steps.
+
+## Self-host cloud backend (optional)
+
+```bash
+pnpm deploy:cloud
+# optional budget alerts: add -c budgetEmail=you@example.com after --
+```
+
+1. Open `infra/outputs.json` — copy `ApiUrl`, `CognitoDomain`, `UserPoolClientId`.
+2. Extension **Settings → Your cloud backend** → paste values → **Save**.
+3. Add the OAuth callback URL (shown in Settings) to Cognito app client.
+4. Popup → **Sign in to SyncX**.
+
+Full guide: [docs/SELF_HOST.md](docs/SELF_HOST.md) · Test checklist: [docs/MANUAL_TEST_PHASE_B.md](docs/MANUAL_TEST_PHASE_B.md)
+
+> **Known limitation:** Cloud settings API exists but the extension options UI currently stores pacing settings locally. Cloud sync for settings is planned; queue and stats sync when signed in.
 
 ## Monorepo layout
 
@@ -24,50 +92,14 @@ Google search (capture) → SyncX queue (local or AWS) → Bing tab replay (your
 | `packages/shared` | Shared types and constants |
 | `services/api` | Lambda API handler |
 | `infra` | AWS CDK stack |
-| `docs/` | Manual tests, privacy, legal notices |
+| `docs/` | Manual tests, privacy, legal, deploy guide |
 
-## Quick start (Phase A — local only)
+## Tech stack
 
-```bash
-pnpm install
-pnpm --filter @syncx/shared build
-pnpm --filter @syncx/extension build
-```
-
-1. Chrome → `chrome://extensions` → Developer mode → **Load unpacked** → `apps/extension/dist`
-2. Sign in to [bing.com](https://www.bing.com) in the same Chrome profile
-3. Search on Google — SyncX queues and replays on Bing automatically
-
-Full checklist: [docs/MANUAL_TEST_PHASE_A.md](docs/MANUAL_TEST_PHASE_A.md)
-
-## AWS deploy (Phase B — your own cloud backend)
-
-SyncX is **self-hostable**: deploy to your AWS account, paste three values into the extension **Settings** UI. No API keys baked into the build.
-
-```bash
-pnpm install
-pnpm deploy:cloud
-# optional budget alerts: add -c budgetEmail=you@example.com after --
-```
-
-1. Open `infra/outputs.json` — copy `ApiUrl`, `CognitoDomain`, `UserPoolClientId` (or use `ExtensionConfigJson`).
-2. Extension **Settings → Your cloud backend** → paste values → **Save**.
-3. Add the OAuth callback URL (shown in Settings) to Cognito app client.
-4. Popup → **Sign in to SyncX**.
-
-Full guide: [docs/SELF_HOST.md](docs/SELF_HOST.md) · Test checklist: [docs/MANUAL_TEST_PHASE_B.md](docs/MANUAL_TEST_PHASE_B.md)
-
-### Optional dev shortcuts
-
-Build-time `VITE_API_URL`, `VITE_COGNITO_CLIENT_ID`, `VITE_COGNITO_DOMAIN` in `apps/extension/.env.local` pre-fill defaults; **Settings UI overrides** for public/self-host distribution.
-
-## Configuration reference
-
-| Setting | Where | Description |
-|---------|-------|-------------|
-| API URL, Cognito domain, Client ID | Extension Settings | User-provided (BYOK) |
-| `TABLE_NAME` | Lambda env | Set by CDK (`SyncXTable`) |
-| `budgetEmail` | CDK context | Email for $10/mo budget alerts |
+- **Extension:** Chrome MV3, Vite, `@crxjs/vite-plugin`
+- **Web:** Next.js 15, Vercel
+- **Cloud:** AWS CDK, Lambda, API Gateway, DynamoDB, Cognito
+- **Monorepo:** pnpm workspaces, Turbo
 
 ## Development
 
@@ -76,6 +108,8 @@ pnpm dev:extension    # Vite dev server with HMR
 pnpm dev:web          # Next.js marketing site (localhost:3000)
 pnpm build            # Build all packages
 ```
+
+Optional dev env: copy [`apps/extension/.env.example`](apps/extension/.env.example) to `.env.local`.
 
 ## API endpoints
 
@@ -98,6 +132,10 @@ pnpm build            # Build all packages
 
 Adjust in extension Settings.
 
+## Hack Club
+
+Built for [Hack Club Shipwrecked / The Bay](https://shipwrecked.hackclub.com/info/the-bay). Time tracked with [Hackatime](https://hackatime.hackclub.com).
+
 ## License
 
-Private project — add license before public release.
+[MIT](LICENSE) — Copyright (c) 2026 Devom B

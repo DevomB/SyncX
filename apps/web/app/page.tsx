@@ -1,63 +1,61 @@
-import Image from "next/image";
 import Link from "next/link";
-import {
-  DEFAULT_MAX_REPLAYS_PER_DAY,
-  DEFAULT_MIN_DELAY_MS,
-  DEFAULT_MAX_DELAY_MS,
-  DEFAULT_USER_SETTINGS,
-} from "@syncx/shared";
+import { CHROME_STORE_URL, GITHUB_URL } from "@/lib/links";
 import styles from "./page.module.css";
-
-const minDelaySec = DEFAULT_MIN_DELAY_MS / 1000;
-const maxDelayMin = DEFAULT_MAX_DELAY_MS / 60_000;
 
 const features = [
   {
-    title: "Automatic mirroring",
+    icon: "⚡",
+    title: "Zero extra effort",
     description:
-      "Captures queries you already run on Google and queues them for later replay on Bing in your browser.",
+      "Search on Google the way you always have. SyncX quietly queues each query for later replay on Bing — no new habits needed.",
   },
   {
-    title: "Conservative pacing",
-    description: `Defaults to ${minDelaySec}s–${maxDelayMin} min delays, ${DEFAULT_MAX_REPLAYS_PER_DAY} replays/day, and active hours ${DEFAULT_USER_SETTINGS.activeStartHour}:00–${DEFAULT_USER_SETTINGS.activeEndHour}:00.`,
+    icon: "🎛",
+    title: "You control the pace",
+    description:
+      "Set your own delays, daily limits, and active hours. Defaults are conservative by design.",
   },
   {
+    icon: "🏠",
     title: "Local-first",
     description:
-      "Phase A works entirely in Chrome local storage — no cloud account required to get started.",
+      "Works entirely out of Chrome's local storage. No account, no cloud, nothing phoning home.",
   },
   {
-    title: "Self-hostable cloud",
+    icon: "🔒",
+    title: "Your data stays yours",
     description:
-      "Deploy your own AWS backend (Lambda, DynamoDB, Cognito) and paste three values into extension Settings.",
+      "Stores query text only. Optionally deploy your own AWS backend — no shared server, no vendor lock-in.",
   },
   {
-    title: "Privacy-conscious",
+    icon: "🛑",
+    title: "Auto-pause on detection",
     description:
-      "Stores query text only. No Microsoft or Google passwords. 30-day TTL on cloud events with delete-user API.",
+      "Detects Bing throttle signals and pauses automatically. Resume any time from the popup.",
   },
   {
-    title: "Throttle detection",
+    icon: "🔓",
+    title: "Fully open source",
     description:
-      "Pauses automatically when Bing throttling signals are detected, with manual pause/resume control.",
+      "MIT licensed. Read the code, fork it, self-host the backend, or just use the extension.",
   },
 ];
 
 const steps = [
   {
-    step: "1",
-    title: "Capture",
-    body: "Search on Google as you normally would. SyncX records the query in your queue.",
+    step: "01",
+    title: "Search normally",
+    body: "Go about your day on Google. SyncX captures each query in the background.",
   },
   {
-    step: "2",
-    title: "Queue",
-    body: "Items wait locally or in your self-hosted cloud backend with deduplication and daily caps.",
+    step: "02",
+    title: "Queue builds up",
+    body: "Queries sit in your local queue, deduplicated and ready for replay.",
   },
   {
-    step: "3",
-    title: "Replay",
-    body: "SyncX opens Bing in your browser and runs the same query with enforced delays.",
+    step: "03",
+    title: "Bing gets the same query",
+    body: "SyncX opens Bing in your browser on a paced schedule — within the limits you set.",
   },
 ];
 
@@ -67,63 +65,74 @@ export default function HomePage() {
       <section className={styles.hero}>
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
-            <span className="badge">Chrome extension · v0.1</span>
-            <h1>Search mirror queue for Chrome</h1>
+            <span className="badge">Chrome Extension · Open Source</span>
+            <h1>Mirror your searches to Bing.</h1>
             <p>
-              SyncX captures Google search queries and replays them on Bing in your
-              browser — with enforced pacing, daily caps, and full user control.
+              SyncX runs entirely in your browser. It picks up what you search on Google
+              and quietly replays it on Bing — with configurable pacing, daily limits,
+              and no cloud required.
             </p>
             <div className={styles.heroActions}>
-              <Link href="/docs#get-started" className="btn btn-primary">
-                Get started
-              </Link>
-              <Link href="/docs#self-host" className="btn btn-secondary">
-                Self-host on AWS
-              </Link>
+              <a
+                href={CHROME_STORE_URL}
+                className="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Install extension
+              </a>
+              <a
+                href={GITHUB_URL}
+                className="btn btn-secondary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View source
+              </a>
             </div>
-            <p className={styles.heroDisclaimer}>
-              Not affiliated with Microsoft. May conflict with Rewards program rules.{" "}
-              <Link href="/risks">Read the risk notice</Link>.
-            </p>
           </div>
           <div className={styles.heroVisual}>
             <div className={styles.flowCard}>
               <div className={styles.flowRow}>
                 <span className={styles.flowLabel}>Google</span>
-                <span className={styles.flowQuery}>&quot;best hiking trails oregon&quot;</span>
+                <span className={styles.flowQuery}>&ldquo;best coffee in portland&rdquo;</span>
+                <span className={styles.flowChip}>captured</span>
               </div>
-              <div className={styles.flowArrow}>↓</div>
+              <div className={styles.flowConnector}>
+                <span className={styles.flowLine} />
+                <span className={styles.flowDot} />
+                <span className={styles.flowLine} />
+              </div>
               <div className={styles.flowRow}>
                 <span className={styles.flowLabel}>SyncX queue</span>
-                <span className={styles.flowMeta}>Pending · paced replay</span>
+                <span className={styles.flowQuery}>1 item pending</span>
+                <span className={`${styles.flowChip} ${styles.flowChipPending}`}>paced</span>
               </div>
-              <div className={styles.flowArrow}>↓</div>
+              <div className={styles.flowConnector}>
+                <span className={styles.flowLine} />
+                <span className={styles.flowDot} />
+                <span className={styles.flowLine} />
+              </div>
               <div className={styles.flowRow}>
                 <span className={styles.flowLabel}>Bing</span>
-                <span className={styles.flowQuery}>Same query · your browser</span>
+                <span className={styles.flowQuery}>&ldquo;best coffee in portland&rdquo;</span>
+                <span className={`${styles.flowChip} ${styles.flowChipDone}`}>done</span>
               </div>
             </div>
-            <Image
-              src="/icon-128.png"
-              alt="SyncX icon"
-              width={64}
-              height={64}
-              className={styles.heroIcon}
-            />
           </div>
         </div>
       </section>
 
       <section id="features" className={styles.section}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Built for personal search mirroring</h2>
+          <h2 className={styles.sectionTitle}>Everything you need, nothing you don&apos;t</h2>
           <p className={styles.sectionLead}>
-            Local-first by default. Optional cloud sync you deploy yourself. No vendor
-            API keys baked into the build.
+            Lightweight, transparent, and built to stay out of your way.
           </p>
           <div className={styles.featureGrid}>
             {features.map((feature) => (
-              <article key={feature.title} className="card">
+              <article key={feature.title} className={`card ${styles.featureCard}`}>
+                <span className={styles.featureIcon}>{feature.icon}</span>
                 <h3>{feature.title}</h3>
                 <p>{feature.description}</p>
               </article>
@@ -135,6 +144,7 @@ export default function HomePage() {
       <section id="how-it-works" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className="container">
           <h2 className={styles.sectionTitle}>How it works</h2>
+          <p className={styles.sectionLead}>Three steps. No configuration required to get started.</p>
           <div className={styles.steps}>
             {steps.map((item) => (
               <article key={item.step} className={styles.step}>
@@ -144,24 +154,31 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-          <pre className={styles.diagram}>
-            <code>{`Google search (capture) → SyncX queue (local or AWS) → Bing tab replay (your browser)`}</code>
-          </pre>
         </div>
       </section>
 
       <section className={styles.section}>
         <div className={`container ${styles.ctaBlock}`}>
           <div>
-            <h2>Ready to try SyncX?</h2>
+            <h2>Get started in under a minute.</h2>
             <p>
-              Build the extension locally, load it unpacked in Chrome, and start with
-              Phase A — no cloud setup required.
+              Install from the Chrome Web Store or clone the repo and load it
+              unpacked — your choice.
             </p>
           </div>
-          <Link href="/docs#get-started" className="btn btn-primary">
-            View setup guide
-          </Link>
+          <div className={styles.ctaButtons}>
+            <a
+              href={CHROME_STORE_URL}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Install extension
+            </a>
+            <Link href="/docs" className="btn btn-secondary">
+              Build from source
+            </Link>
+          </div>
         </div>
       </section>
     </>
