@@ -99,7 +99,13 @@
   box-shadow: 0 26px 70px rgba(0, 0, 0, 0.38);
 }
 
-.flowStage::before {
+.flowTrack {
+  position: relative;
+  height: 40px;
+  margin-bottom: clamp(12px, 2vw, 18px);
+}
+
+.flowTrack::before {
   content: "";
   position: absolute;
   left: 10%;
@@ -120,7 +126,8 @@
   position: absolute;
   z-index: 2;
   left: calc(10% - 34px);
-  top: calc(50% - 17px);
+  top: 50%;
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -148,8 +155,8 @@
 
 .flowNode {
   position: relative;
-  min-height: 138px;
-  padding: 48px 18px 18px;
+  min-height: 118px;
+  padding: 18px;
   background: rgba(12, 14, 18, 0.78);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -495,11 +502,22 @@
     padding: 18px 16px;
   }
 
+  .flowTrack {
+    position: static;
+    height: 0;
+    margin: 0;
+  }
+
+  .flowTrack::before {
+    display: none;
+  }
+
   .flowStage::before {
+    content: "";
+    position: absolute;
     left: 30px;
-    right: auto;
-    top: 34px;
-    bottom: 34px;
+    top: 18px;
+    bottom: 18px;
     width: 2px;
     height: auto;
     background: linear-gradient(
@@ -509,11 +527,13 @@
       rgba(16, 185, 129, 0.65),
       rgba(16, 185, 129, 0)
     );
+    opacity: 0.75;
   }
 
   .flowPacket {
     left: 17px;
-    top: calc(12% - 17px);
+    top: 34px;
+    transform: none;
     animation-name: packetTravelMobile;
   }
 
@@ -547,24 +567,24 @@
 @keyframes packetTravelMobile {
   0%,
   12% {
-    top: calc(12% - 17px);
+    top: 34px;
     opacity: 1;
   }
 
   36%,
   48% {
-    top: calc(50% - 17px);
+    top: calc(33% - 17px);
     opacity: 1;
   }
 
   72%,
   84% {
-    top: calc(88% - 17px);
+    top: calc(66% - 17px);
     opacity: 1;
   }
 
   100% {
-    top: calc(88% - 17px);
+    top: calc(66% - 17px);
     opacity: 0.35;
   }
 }

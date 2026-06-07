@@ -134,7 +134,9 @@ export default function HomePage() {
           </div>
           <div className={styles.heroVisual} aria-hidden="true">
             <div className={styles.flowStage}>
-              <span className={styles.flowPacket}>query</span>
+              <div className={styles.flowTrack}>
+                <span className={styles.flowPacket}>query</span>
+              </div>
               <div className={styles.flowRoute}>
                 {flowSteps.map((step) => (
                   <div key={step.label} className={styles.flowNode}>
