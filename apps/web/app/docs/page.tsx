@@ -11,7 +11,8 @@ export default function DocsPage() {
     <article className={`container prose ${styles.page}`}>
       <h1>Setup guide</h1>
       <p>
-        SyncX runs entirely in Chrome — no account or cloud setup required.
+        SyncX runs in Chrome. You can use it without creating an account or
+        setting up a server.
       </p>
 
       <h2 id="install">Install</h2>
@@ -28,7 +29,7 @@ export default function DocsPage() {
           </a>{" "}
           in the same Chrome profile
         </li>
-        <li>Search on Google — SyncX queues and replays on Bing automatically</li>
+        <li>Search on Google. SyncX queues the search text and replays it on Bing.</li>
       </ol>
 
       <h2 id="settings">Settings</h2>

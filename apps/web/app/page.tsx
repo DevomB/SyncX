@@ -21,39 +21,39 @@ type Feature = {
 const features: Feature[] = [
   {
     icon: BoltIcon,
-    title: "Zero extra effort",
+    title: "Search like usual",
     description:
-      "Search on Google the way you always have. SyncX quietly queues each query for later replay on Bing — no new habits needed.",
+      "Use Google normally. SyncX saves the search text locally and sends it to Bing later.",
   },
   {
     icon: SlidersIcon,
-    title: "You control the pace",
+    title: "Pick the limits",
     description:
-      "Set your own delays, daily limits, and active hours. Defaults are conservative by design.",
+      "Choose the delay, daily cap, and active hours. The defaults start slow on purpose.",
   },
   {
     icon: HomeIcon,
-    title: "Local-first",
+    title: "Local by default",
     description:
-      "Works entirely out of Chrome's local storage. No account, no cloud, nothing phoning home.",
+      "Your queue can stay in Chrome's local storage. No account is required to use the extension.",
   },
   {
     icon: ShieldIcon,
-    title: "Your data stays yours",
+    title: "No mystery server",
     description:
-      "Stores query text only. Optionally deploy your own AWS backend — no shared server, no vendor lock-in.",
+      "SyncX stores search text only. If you want cloud sync, you can host the AWS backend yourself.",
   },
   {
     icon: PauseIcon,
-    title: "Auto-pause on detection",
+    title: "Stops when Bing pushes back",
     description:
-      "Detects Bing throttle signals and pauses automatically. Resume any time from the popup.",
+      "When SyncX sees throttling signals from Bing, it pauses the queue until you resume it.",
   },
   {
     icon: CodeIcon,
-    title: "Fully open source",
+    title: "Open source",
     description:
-      "MIT licensed. Read the code, fork it, self-host the backend, or just use the extension.",
+      "MIT licensed. Read the code, fork it, self-host it, or just install the extension.",
   },
 ];
 
@@ -61,17 +61,17 @@ const steps = [
   {
     step: "01",
     title: "Search normally",
-    body: "Go about your day on Google. SyncX captures each query in the background.",
+    body: "Keep using Google the way you already do. SyncX watches for search query text.",
   },
   {
     step: "02",
     title: "Queue builds up",
-    body: "Queries sit in your local queue, deduplicated and ready for replay.",
+    body: "The extension keeps a local queue, removes duplicates, and waits for the right time.",
   },
   {
     step: "03",
-    title: "Bing gets the same query",
-    body: "SyncX opens Bing in your browser on a paced schedule — within the limits you set.",
+    title: "Bing runs it too",
+    body: "SyncX opens Bing in your browser on the schedule and limits you set.",
   },
 ];
 
@@ -106,11 +106,11 @@ export default function HomePage() {
         <div className={`container ${styles.heroInner}`}>
           <div className={styles.heroCopy}>
             <span className="badge">Chrome Extension · Open Source</span>
-            <h1>Mirror your searches to Bing.</h1>
+            <h1>Search once. Run it on Bing too.</h1>
             <p>
-              SyncX runs entirely in your browser. It picks up what you search on Google
-              and quietly replays it on Bing — with configurable pacing, daily limits,
-              and no cloud required.
+              SyncX is a small Chrome extension for people who already search on
+              Google but also want those searches to run on Bing. It keeps a local
+              queue, moves at the pace you choose, and does not require an account.
             </p>
             <div className={styles.heroActions}>
               <a
@@ -157,9 +157,9 @@ export default function HomePage() {
 
       <section id="features" className={styles.section}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Everything you need, nothing you don&apos;t</h2>
+          <h2 className={styles.sectionTitle}>Built for daily use</h2>
           <p className={styles.sectionLead}>
-            Lightweight, transparent, and built to stay out of your way.
+            Small controls, clear defaults, and no account to manage.
           </p>
           <div className={styles.featureGrid}>
             {features.map((feature) => {
@@ -181,7 +181,7 @@ export default function HomePage() {
       <section id="how-it-works" className={`${styles.section} ${styles.sectionAlt}`}>
         <div className="container">
           <h2 className={styles.sectionTitle}>How it works</h2>
-          <p className={styles.sectionLead}>Three steps. No configuration required to get started.</p>
+          <p className={styles.sectionLead}>Install it, sign in to Bing, then keep using Google.</p>
           <div className={styles.steps}>
             {steps.map((item) => (
               <article key={item.step} className={styles.step}>
@@ -197,10 +197,10 @@ export default function HomePage() {
       <section className={styles.section}>
         <div className={`container ${styles.ctaBlock}`}>
           <div>
-            <h2>Get started in under a minute.</h2>
+            <h2>Ready when you are.</h2>
             <p>
-              Install from the Chrome Web Store, sign in to Bing, and search on
-              Google as usual.
+              Install from the Chrome Web Store, sign in to Bing, and use Google
+              like you normally would.
             </p>
           </div>
           <div className="btnStack">

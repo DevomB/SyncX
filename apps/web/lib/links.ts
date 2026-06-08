@@ -1,8 +1,7 @@
 export const GITHUB_URL = "https://github.com/DevomB/SyncX";
 
-/** Replace with your Chrome Web Store URL after unlisted listing is approved. */
 export const CHROME_STORE_URL =
-  "https://chrome.google.com/webstore/detail/syncx";
+  "https://chromewebstore.google.com/detail/syncx/aoemdhkojjipbafpdehcfgfldjogfkka";
 
 export const SITE_URL = "https://syncx.devomb.com";
 

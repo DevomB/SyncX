@@ -15,11 +15,11 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "SyncX — Mirror your Google searches to Bing",
+    default: "SyncX - Run your Google searches on Bing too",
     template: "%s · SyncX",
   },
   description:
-    "Open-source Chrome extension that mirrors your Google searches to Bing — with configurable pacing, daily limits, and no cloud required.",
+    "SyncX is an open-source Chrome extension that queues your Google searches locally and replays them on Bing at the pace you choose.",
   applicationName: "SyncX",
   keywords: ["SyncX", "Chrome extension", "Bing", "search mirror", "open source"],
   authors: [{ name: "Devom B" }],
@@ -34,18 +34,18 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "SyncX — Mirror your searches to Bing",
+    title: "SyncX - Run your Google searches on Bing too",
     description:
-      "Open-source Chrome extension. Local-first, self-hostable, MIT licensed.",
+      "Open-source Chrome extension with local storage, pacing controls, and optional self-hosting.",
     type: "website",
     url: SITE_URL,
     siteName: "SyncX",
   },
   twitter: {
     card: "summary",
-    title: "SyncX — Mirror your searches to Bing",
+    title: "SyncX - Run your Google searches on Bing too",
     description:
-      "Open-source Chrome extension that mirrors your Google searches to Bing.",
+      "Queue Google searches locally and replay them on Bing at the pace you choose.",
   },
 };
 

@@ -9,7 +9,7 @@ export function Footer() {
         <div className={styles.top}>
           <div className={styles.brand}>
             <p className={styles.brandName}>SyncX</p>
-            <p className={styles.tagline}>Open-source Chrome extension</p>
+            <p className={styles.tagline}>Chrome extension for mirrored searches</p>
           </div>
           <div className={styles.cols}>
             <div className={styles.col}>
@@ -36,7 +36,7 @@ export function Footer() {
         <div className={styles.bottom}>
           <p className={styles.copy}>© {new Date().getFullYear()} SyncX — MIT License</p>
           <p className={styles.disclaimer}>
-            Not affiliated with Microsoft or Google. Use at your own risk. See Terms
+            Independent project. Not affiliated with Microsoft or Google. See Terms
             of Service.
           </p>
         </div>

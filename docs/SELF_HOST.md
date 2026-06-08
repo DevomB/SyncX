@@ -103,4 +103,3 @@ Find in AWS Console:
 | `/health` fails | Confirm stack deployed; URL has no trailing slash |
 | 401 on `/v1/*` | Sign out and sign in again; check client ID matches deployed pool |
 
-See also [MANUAL_TEST_PHASE_B.md](./MANUAL_TEST_PHASE_B.md).

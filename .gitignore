@@ -1,8 +1,11 @@
 node_modules/
 dist/
+.next/
 cdk.out/
 .turbo/
 *.tsbuildinfo
+*.log
+.syncx-web-dev.*
 .env
 .env.*
 infra/outputs.json
